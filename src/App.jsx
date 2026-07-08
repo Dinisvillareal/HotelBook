@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>HotelBook Admin Dashboard</h1>
+      <h1>Rooms and Prices</h1>
       
       {roomTypes.length === 0 ? (
         <p>Loading rooms...</p>
