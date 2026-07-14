@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 
 // --- YOUR COMPONENTS ---
 import Login from './pages/Login';
+import Register from './pages/Register';
 import AdminLayout from './components/AdminLayout';
 import CustomerLayout from './components/CustomerLayout';
 // Admin Pages
@@ -50,6 +51,7 @@ export default function App() {
       <Routes>
         {/* PUBLIC ROUTE */}
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         {/* ========================================== */}
         {/* ADMIN & STAFF ROUTES (Wrapped in AdminLayout) */}
