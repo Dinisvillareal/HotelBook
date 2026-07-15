@@ -5,8 +5,36 @@ export default function ManageRooms() {
   const [rooms, setRooms] = useState([]);
   const [formData, setFormData] = useState({ name: '', basePrice: '', capacity: '' });
   const [statusMessage, setStatusMessage] = useState('');
+  const [newRoomData, setNewRoomData] = useState({
+  roomNumber: '',
+  roomTypeId: ''
+});
+
+// 2. Add the onChange handler for this specific form
+const handleRoomChange = (e) => {
+  setNewRoomData({ ...newRoomData, [e.target.name]: e.target.value });
+};
 
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  const handleCreatePhysicalRoom = async (e) => {
+    e.preventDefault();
+    try {
+      // 1. Grab the token specifically for this function
+      const token = localStorage.getItem('jwtToken');
+      const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+      // 2. Make the request
+      await axios.post(`${apiUrl}/api/Rooms`, newRoomData, authConfig);
+      
+      alert("Physical room created successfully!");
+      setNewRoomData({ roomNumber: '', roomTypeId: '' }); // Clear the form
+      
+    } catch (error) {
+      console.error("Error creating room:", error);
+      alert("Failed to create room. Check the console.");
+    }
+  };
 
   // 1. Function to grab the latest rooms
   const fetchRooms = () => {
@@ -95,6 +123,49 @@ export default function ManageRooms() {
           </div>
         </div>
       </div>
+      {/* --- NEW FORM: Create Physical Room --- */}
+<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', marginTop: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+  <h3 style={{ textAlign: 'center', marginBottom: '20px', color: '#555' }}>Create Physical Room</h3>
+  
+  <form onSubmit={handleCreatePhysicalRoom}>
+    <div style={{ marginBottom: '15px' }}>
+      <label style={{ display: 'block', marginBottom: '5px' }}>Room Number</label>
+      <input 
+        type="text" 
+        name="roomNumber" 
+        value={newRoomData.roomNumber} 
+        onChange={handleRoomChange} 
+        placeholder="e.g. 101" 
+        required 
+        style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+      />
     </div>
+
+    <div style={{ marginBottom: '20px' }}>
+      <label style={{ display: 'block', marginBottom: '5px' }}>Assign Room Type</label>
+      <select 
+        name="roomTypeId" 
+        value={newRoomData.roomTypeId} 
+        onChange={handleRoomChange} 
+        required
+        style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+      >
+        <option value="">-- Select a Room Type --</option>
+        {/* Loop through your fetched room types to populate the dropdown */}
+        {rooms.map(type => (
+          <option key={type.id} value={type.id}>
+            {type.name} (₱{type.basePrice})
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
+      Add Physical Room
+    </button>
+  </form>
+</div>
+    </div>
+    
   );
 }
