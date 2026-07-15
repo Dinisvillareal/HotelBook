@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function CreateReservation() {
   const [rooms, setRooms] = useState([]);
@@ -12,7 +14,7 @@ export default function CreateReservation() {
     guestsCount: 1
   });
   
-  
+  const [disabledDates, setDisabledDates] = useState([]);
   // NEW: State to track the voucher code
   const [voucherCode, setVoucherCode] = useState('');
   
@@ -39,8 +41,51 @@ export default function CreateReservation() {
       .catch(err => console.error("Could not fetch vouchers:", err));
   }, []);
 
+  useEffect(() => {
+    // If no room is selected yet, don't do anything
+    if (!formData.roomId) return;
+
+    const fetchRoomReservations = async () => {
+      try {
+        // Fetch reservations. (Adjust this URL if you have a specific endpoint for room reservations!)
+        const response = await axios.get(`${apiUrl}/api/Reservations`, authConfig);
+        
+        // Filter reservations to ONLY the room they selected, and ignore cancelled ones
+        const roomReservations = response.data.filter(
+          res => res.roomId === parseInt(formData.roomId) && res.status !== "Cancelled"
+        );
+
+        let datesToBlock = [];
+
+        // Loop through each reservation and grab every day between check-in and check-out
+        roomReservations.forEach(reservation => {
+          let currentDate = new Date(reservation.checkInDate);
+          const endDate = new Date(reservation.checkOutDate);
+
+          while (currentDate <= endDate) {
+            datesToBlock.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1); // Move forward one day
+          }
+        });
+
+        // Save the array of blocked dates to our state
+        setDisabledDates(datesToBlock);
+
+      } catch (error) {
+        console.error("Error fetching reservations for date blocking:", error);
+      }
+    };
+
+    fetchRoomReservations();
+  }, [formData.roomId]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+    
+    if (e.target.name === 'roomId') {
+      setDisabledDates([]);
+    }
   };
 
   const handleVoucherChange = (e) => {
@@ -122,15 +167,36 @@ export default function CreateReservation() {
             </select>
           </div>
 
-          <div style={{ display: 'flex', gap: '15px' }}>
-            {/* 2. DATES */}
+         <div style={{ display: 'flex', gap: '15px' }}>
+            {/* CHECK-IN DATE */}
             <div style={{ flex: 1 }}>
               <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Check-In</label>
-              <input type="date" name="checkInDate" value={formData.checkInDate} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+              <DatePicker
+                selected={formData.checkInDate ? new Date(formData.checkInDate) : null}
+                onChange={(date) => handleChange({ target: { name: 'checkInDate', value: date } })}
+                excludeDates={disabledDates} 
+                minDate={new Date()}         
+                dateFormat="dd/MM/yyyy"
+                placeholderText="dd/mm/yyyy"
+                className="date-picker-input" 
+                required
+              />
             </div>
+
+            {/* CHECK-OUT DATE */}
             <div style={{ flex: 1 }}>
               <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Check-Out</label>
-              <input type="date" name="checkOutDate" value={formData.checkOutDate} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+              <DatePicker
+                selected={formData.checkOutDate ? new Date(formData.checkOutDate) : null}
+                onChange={(date) => handleChange({ target: { name: 'checkOutDate', value: date } })}
+                excludeDates={disabledDates} 
+                // Prevent checking out BEFORE they check in!
+                minDate={formData.checkInDate ? new Date(formData.checkInDate) : new Date()} 
+                dateFormat="dd/MM/yyyy"
+                placeholderText="dd/mm/yyyy"
+                className="date-picker-input"
+                required
+              />
             </div>
           </div>
 
