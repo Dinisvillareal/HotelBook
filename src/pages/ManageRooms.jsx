@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import RoomMatrix from '../components/RoomMatrix';
+
 export default function ManageRooms() {
   const [rooms, setRooms] = useState([]);
   const [formData, setFormData] = useState({ name: '', basePrice: '', capacity: '' });
@@ -9,6 +11,12 @@ export default function ManageRooms() {
   roomNumber: '',
   roomTypeId: ''
 });
+const [activeReservations, setActiveReservations] = useState([]);
+const [physicalRooms, setPhysicalRooms] = useState([]);
+  const [upgradeData, setUpgradeData] = useState({
+    reservationId: '',
+    targetRoomTypeId: ''
+  });
 
 // 2. Add the onChange handler for this specific form
 const handleRoomChange = (e) => {
@@ -47,7 +55,47 @@ const handleRoomChange = (e) => {
   };
 
   // Run this the moment the page loads
-  useEffect(() => { fetchRooms(); }, []);
+  useEffect(() => { 
+    fetchRooms(); // Your existing function
+
+    const token = localStorage.getItem('jwtToken');
+    const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+    
+    // 1. Fetch Reservations (Already there)
+    axios.get(`${apiUrl}/api/Reservations`, authConfig)
+      .then(res => {
+        const confirmed = res.data.filter(r => r.status === "Confirmed");
+        setActiveReservations(confirmed);
+      })
+      .catch(err => console.error("Error fetching reservations:", err));
+
+    // 2. NEW: Fetch Physical Rooms so we can look up the real numbers!
+    axios.get(`${apiUrl}/api/Rooms`, authConfig)
+      .then(res => {
+        setPhysicalRooms(res.data.$values || res.data);
+      })
+      .catch(err => console.error("Error fetching physical rooms:", err));
+  }, []);
+  
+  const handleUpgradeSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('jwtToken');
+    const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+    try {
+      // Send the targetRoomTypeId to your upgrade endpoint
+      await axios.patch(`${apiUrl}/api/Reservations/${upgradeData.reservationId}/upgrade`, 
+        { targetRoomTypeId: parseInt(upgradeData.targetRoomTypeId) }, 
+        authConfig
+      );
+      
+      alert("Room upgraded successfully!");
+      window.location.reload(); // Refresh the page to update the lists
+    } catch (error) {
+      console.error("Error upgrading room:", error);
+      alert(error.response?.data?.message || "Failed to upgrade room.");
+    }
+  };
 
   // 2. Handle typing in the form
   const handleInputChange = (e) => {
@@ -80,6 +128,7 @@ const handleRoomChange = (e) => {
   return (
     <div>
       <h2>Manage Rooms</h2>
+      <RoomMatrix />
       
       <div style={{ display: 'flex', gap: '30px', marginTop: '20px' }}>
         {/* LEFT SIDE: The Creation Form */}
@@ -111,16 +160,57 @@ const handleRoomChange = (e) => {
         </div>
 
         {/* RIGHT SIDE: The Live Room List */}
-        <div style={{ flex: 1 }}>
-          <h3>Current Rooms</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {rooms.length === 0 ? <p>No rooms found in the database.</p> : rooms.map(room => (
-              <div key={room.id} style={{ backgroundColor: 'white', padding: '15px', borderRadius: '6px', border: '1px solid #eee' }}>
-                <strong style={{ fontSize: '18px' }}>{room.name}</strong>
-                <p style={{ margin: '5px 0 0 0', color: '#666' }}>₱{room.basePrice} / night • {room.capacity} Pax</p>
-              </div>
-            ))}
-          </div>
+       <div style={{ flex: 1, backgroundColor: 'white', padding: '20px', borderRadius: '8px', border: '1px solid #ddd', height: 'fit-content' }}>
+          <h3>Upgrade Customer Room</h3>
+          
+          <form onSubmit={handleUpgradeSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Select Customer Reservation</label>
+              <select 
+                value={upgradeData.reservationId} 
+                onChange={(e) => setUpgradeData({ ...upgradeData, reservationId: e.target.value })} 
+                required 
+                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+              >
+                <option value="">-- Select Reservation --</option>
+                
+                {activeReservations.map(res => {
+                  // 1. Find the matching room in our physicalRooms array
+                  const actualRoom = physicalRooms.find(r => r.id === res.roomId);
+                  // 2. Grab the string roomNumber (or fallback to the ID if it fails)
+                  const displayRoomNumber = actualRoom ? actualRoom.roomNumber : res.roomId;
+
+                  return (
+                    <option key={res.id} value={res.id}>
+                      Reservation #{res.id} (Current Room: {displayRoomNumber})
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Upgrade to Room Type</label>
+              <select 
+                value={upgradeData.targetRoomTypeId} 
+                onChange={(e) => setUpgradeData({ ...upgradeData, targetRoomTypeId: e.target.value })} 
+                required 
+                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+              >
+                <option value="">-- Select New Room Type --</option>
+                {/* 'rooms' here is your existing state holding the Room Types from the left side! */}
+                {rooms.map(type => (
+                  <option key={type.id} value={type.id}>
+                    {type.name} (₱{type.basePrice})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <button type="submit" style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+              Confirm Upgrade
+            </button>
+          </form>
         </div>
       </div>
       {/* --- NEW FORM: Create Physical Room --- */}
