@@ -1,6 +1,9 @@
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+
+
+
 export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,6 +63,7 @@ export default function AdminLayout() {
         <Link to="/book-room" style={getLinkStyle('/book-room')}>✍️ Book a Room</Link>
         <Link to="/rooms" style={getLinkStyle('/rooms')}>🛏️ Manage Rooms</Link>
         <Link to="/reservations" style={getLinkStyle('/reservations')}>📅 Reservations</Link>
+        <Link to="/profile" className="sidebar-link">👤 My Profile</Link>
 
         {/* ONLY Admins see these links! */}
         {userRole === 'Admin' && (

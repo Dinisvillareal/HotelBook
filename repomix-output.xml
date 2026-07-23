@@ -1,0 +1,3131 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.env.development
+.gitignore
+eslint.config.js
+index.html
+package.json
+public/favicon.svg
+public/icons.svg
+README.md
+src/App.css
+src/App.jsx
+src/assets/hero.png
+src/assets/react.svg
+src/assets/vite.svg
+src/components/AdminLayout.jsx
+src/components/CustomerLayout.jsx
+src/components/RoomMatrix.jsx
+src/index.css
+src/main.jsx
+src/pages/CreateReservation.jsx
+src/pages/CustomerOverview.jsx
+src/pages/CustomerReservations.jsx
+src/pages/Login.css
+src/pages/Login.jsx
+src/pages/ManagePrices.jsx
+src/pages/ManageReservations.jsx
+src/pages/ManageRooms.jsx
+src/pages/Overview.jsx
+src/pages/Register.css
+src/pages/Register.jsx
+src/pages/RegisterStaff.jsx
+src/pages/UserProfile.jsx
+vercel.json
+vite.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/pages/Login.css">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.login-page{
+
+    width:100%;
+    height:100vh;
+
+    background:url("https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1974")
+        center center/cover no-repeat;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.overlay{
+
+    width:100%;
+    height:100%;
+
+    background:rgba(15,23,42,.65);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-card{
+
+    width:420px;
+
+    padding:45px;
+
+    border-radius:24px;
+
+    backdrop-filter:blur(18px);
+
+    background:rgba(255,255,255,.15);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    color:white;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.3);
+
+    animation:fadeUp .7s;
+}
+
+.logo{
+
+    font-size:45px;
+
+    text-align:center;
+
+    color:#60a5fa;
+
+    margin-bottom:15px;
+}
+
+.login-card h1{
+
+    text-align:center;
+
+    margin-bottom:8px;
+}
+
+.login-card p{
+
+    text-align:center;
+
+    opacity:.8;
+
+    margin-bottom:30px;
+}
+
+.input-group{
+
+    position:relative;
+
+    margin-bottom:20px;
+}
+
+.icon{
+
+    position:absolute;
+
+    left:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#94a3b8;
+}
+
+.input-group input{
+
+    width:100%;
+
+    padding:15px 50px;
+
+    border:none;
+
+    border-radius:12px;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.3s;
+}
+
+.input-group input:focus{
+
+    box-shadow:0 0 0 3px #3b82f6;
+}
+
+.eye-btn{
+
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    background:none;
+
+    border:none;
+
+    color:#64748b;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+.login-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.login-btn:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+}
+
+.login-btn:disabled{
+
+    background:#64748b;
+
+    cursor:not-allowed;
+}
+
+.register-link{
+
+    margin-top:25px;
+
+    text-align:center;
+}
+
+.register-link a{
+
+    color:#60a5fa;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    margin-left:5px;
+}
+
+.error{
+
+    background:#ef4444;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    text-align:center;
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+</file>
+
+<file path="src/pages/Register.css">
+@import "./Login.css";
+
+.register-page {
+  width: 100%;
+  min-height: 100vh;
+  background: url("/images/login-bg.jpg") center center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-card {
+  width: 460px;
+  padding: 45px;
+  border-radius: 24px;
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+}
+
+.register-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: #16a34a;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+}
+
+.register-btn:disabled {
+  background: #64748b;
+  cursor: not-allowed;
+}
+
+.success {
+  background: rgba(34, 197, 94, 0.18);
+  color: #dcfce7;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.strength {
+  margin-top: -8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.strength.weak {
+  color: #f87171;
+}
+
+.strength.medium {
+  color: #fbbf24;
+}
+
+.strength.strong {
+  color: #4ade80;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.login-link a {
+  margin-left: 6px;
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 600;
+}
+</file>
+
+<file path="src/pages/UserProfile.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export default function UserProfile() {
+  // 1. We use useState to hold the user's profile info
+  const [profileData, setProfileData] = useState({
+    fullName: '',
+    email: '',
+  });
+
+  // 2. We use useEffect to trigger our API call when the page loads
+  useEffect(() => {
+    // We will add the axios.get call to your C# backend here soon!
+    console.log("Profile component mounted, ready to fetch data.");
+  }, []);
+
+  return (
+    <div style={{ padding: '20px', backgroundColor: 'white', borderRadius: '8px' }}>
+      <h2>My Profile</h2>
+      <p>Manage your account details and settings here.</p>
+      
+      {/* A temporary placeholder to show where the data will go */}
+      <div style={{ marginTop: '20px' }}>
+        <p><strong>Name:</strong> {profileData.fullName || "Loading..."}</p>
+        <p><strong>Email:</strong> {profileData.email || "Loading..."}</p>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path=".env.development">
+VITE_API_URL=https://localhost:7243
+</file>
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path="eslint.config.js">
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
+  },
+])
+</file>
+
+<file path="index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hotelbook-frontend</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="public/favicon.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" fill="none" viewBox="0 0 48 46"><path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" style="fill:#863bff;fill:color(display-p3 .5252 .23 1);fill-opacity:1"/><mask id="a" width="48" height="46" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M25.842 44.938c-.664.844-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.183c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.498 0-3.579-1.842-3.579H1.133c-.92 0-1.456-1.04-.92-1.787L9.91.473c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.578 1.842 3.578h11.377c.943 0 1.473 1.088.89 1.832L25.843 44.94z" style="fill:#000;fill-opacity:1"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#ede6ff" rx="5.508" ry="14.704" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -4.47 31.516)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#ede6ff" rx="10.399" ry="29.851" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -39.328 7.883)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#7e14ff" rx="5.508" ry="30.487" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -25.913 -14.639)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -32.644 -3.334)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -34.34 30.47)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#ede6ff" rx="14.072" ry="22.078" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="rotate(93.35 24.506 48.493)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx=".387" cy="8.972" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(39.51 .387 8.972)"/></g><g filter="url(#k)"><ellipse cx="47.523" cy="-6.092" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 47.523 -6.092)"/></g><g filter="url(#l)"><ellipse cx="41.412" cy="6.333" fill="#47bfff" rx="5.971" ry="9.665" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 41.412 6.333)"/></g><g filter="url(#m)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#n)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#o)"><ellipse cx="35.651" cy="29.907" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 35.651 29.907)"/></g><g filter="url(#p)"><ellipse cx="38.418" cy="32.4" fill="#47bfff" rx="5.971" ry="15.297" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 38.418 32.4)"/></g></g><defs><filter id="b" width="60.045" height="41.654" x="-19.77" y="16.149" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-54.613" y="-7.533" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-49.64" y="2.03" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-45.045" y="20.029" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-43.513" y="21.178" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="15.756" y="-17.901" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-27.636" y="-22.853" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="20.116" y="-38.415" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="24.641" y="-11.323" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="8.244" y="-2.416" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="18.713" y="10.588" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="public/icons.svg">
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="bluesky-icon" viewBox="0 0 16 17">
+    <g clip-path="url(#bluesky-clip)"><path fill="#08060d" d="M7.75 7.735c-.693-1.348-2.58-3.86-4.334-5.097-1.68-1.187-2.32-.981-2.74-.79C.188 2.065.1 2.812.1 3.251s.241 3.602.398 4.13c.52 1.744 2.367 2.333 4.07 2.145-2.495.37-4.71 1.278-1.805 4.512 3.196 3.309 4.38-.71 4.987-2.746.608 2.036 1.307 5.91 4.93 2.746 2.72-2.746.747-4.143-1.747-4.512 1.702.189 3.55-.4 4.07-2.145.156-.528.397-3.691.397-4.13s-.088-1.186-.575-1.406c-.42-.19-1.06-.395-2.741.79-1.755 1.24-3.64 3.752-4.334 5.099"/></g>
+    <defs><clipPath id="bluesky-clip"><path fill="#fff" d="M.1.85h15.3v15.3H.1z"/></clipPath></defs>
+  </symbol>
+  <symbol id="discord-icon" viewBox="0 0 20 19">
+    <path fill="#08060d" d="M16.224 3.768a14.5 14.5 0 0 0-3.67-1.153c-.158.286-.343.67-.47.976a13.5 13.5 0 0 0-4.067 0c-.128-.306-.317-.69-.476-.976A14.4 14.4 0 0 0 3.868 3.77C1.546 7.28.916 10.703 1.231 14.077a14.7 14.7 0 0 0 4.5 2.306q.545-.748.965-1.587a9.5 9.5 0 0 1-1.518-.74q.191-.14.372-.293c2.927 1.369 6.107 1.369 8.999 0q.183.152.372.294-.723.437-1.52.74.418.838.963 1.588a14.6 14.6 0 0 0 4.504-2.308c.37-3.911-.63-7.302-2.644-10.309m-9.13 8.234c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.894 0 1.614.82 1.599 1.82.001 1-.705 1.82-1.6 1.82m5.91 0c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.893 0 1.614.82 1.599 1.82 0 1-.706 1.82-1.6 1.82"/>
+  </symbol>
+  <symbol id="documentation-icon" viewBox="0 0 21 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="m15.5 13.333 1.533 1.322c.645.555.967.833.967 1.178s-.322.623-.967 1.179L15.5 18.333m-3.333-5-1.534 1.322c-.644.555-.966.833-.966 1.178s.322.623.966 1.179l1.534 1.321"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M17.167 10.836v-4.32c0-1.41 0-2.117-.224-2.68-.359-.906-1.118-1.621-2.08-1.96-.599-.21-1.349-.21-2.848-.21-2.623 0-3.935 0-4.983.369-1.684.591-3.013 1.842-3.641 3.428C3 6.449 3 7.684 3 10.154v2.122c0 2.558 0 3.838.706 4.726q.306.383.713.671c.76.536 1.79.64 3.581.66"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M3 10a2.78 2.78 0 0 1 2.778-2.778c.555 0 1.209.097 1.748-.047.48-.129.854-.503.982-.982.145-.54.048-1.194.048-1.749a2.78 2.78 0 0 1 2.777-2.777"/>
+  </symbol>
+  <symbol id="github-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M9.356 1.85C5.05 1.85 1.57 5.356 1.57 9.694a7.84 7.84 0 0 0 5.324 7.44c.387.079.528-.168.528-.376 0-.182-.013-.805-.013-1.454-2.165.467-2.616-.935-2.616-.935-.349-.91-.864-1.143-.864-1.143-.71-.48.051-.48.051-.48.787.051 1.2.805 1.2.805.695 1.194 1.817.857 2.268.649.064-.507.27-.857.49-1.052-1.728-.182-3.545-.857-3.545-3.87 0-.857.31-1.558.8-2.104-.078-.195-.349-1 .077-2.078 0 0 .657-.208 2.14.805a7.5 7.5 0 0 1 1.946-.26c.657 0 1.328.092 1.946.26 1.483-1.013 2.14-.805 2.14-.805.426 1.078.155 1.883.078 2.078.502.546.799 1.247.799 2.104 0 3.013-1.818 3.675-3.558 3.87.284.247.528.714.528 1.454 0 1.052-.012 1.896-.012 2.156 0 .208.142.455.528.377a7.84 7.84 0 0 0 5.324-7.441c.013-4.338-3.48-7.844-7.773-7.844" clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="social-icon" viewBox="0 0 20 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M12.5 6.667a4.167 4.167 0 1 0-8.334 0 4.167 4.167 0 0 0 8.334 0"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M2.5 16.667a5.833 5.833 0 0 1 8.75-5.053m3.837.474.513 1.035c.07.144.257.282.414.309l.93.155c.596.1.736.536.307.965l-.723.73a.64.64 0 0 0-.152.531l.207.903c.164.715-.213.991-.84.618l-.872-.52a.63.63 0 0 0-.577 0l-.872.52c-.624.373-1.003.094-.84-.618l.207-.903a.64.64 0 0 0-.152-.532l-.723-.729c-.426-.43-.289-.864.306-.964l.93-.156a.64.64 0 0 0 .412-.31l.513-1.034c.28-.562.735-.562 1.012 0"/>
+  </symbol>
+  <symbol id="x-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M1.893 1.98c.052.072 1.245 1.769 2.653 3.77l2.892 4.114c.183.261.333.48.333.486s-.068.089-.152.183l-.522.593-.765.867-3.597 4.087c-.375.426-.734.834-.798.905a1 1 0 0 0-.118.148c0 .01.236.017.664.017h.663l.729-.83c.4-.457.796-.906.879-.999a692 692 0 0 0 1.794-2.038c.034-.037.301-.34.594-.675l.551-.624.345-.392a7 7 0 0 1 .34-.374c.006 0 .93 1.306 2.052 2.903l2.084 2.965.045.063h2.275c1.87 0 2.273-.003 2.266-.021-.008-.02-1.098-1.572-3.894-5.547-2.013-2.862-2.28-3.246-2.273-3.266.008-.019.282-.332 2.085-2.38l2-2.274 1.567-1.782c.022-.028-.016-.03-.65-.03h-.674l-.3.342a871 871 0 0 1-1.782 2.025c-.067.075-.405.458-.75.852a100 100 0 0 1-.803.91c-.148.172-.299.344-.99 1.127-.304.343-.32.358-.345.327-.015-.019-.904-1.282-1.976-2.808L6.365 1.85H1.8zm1.782.91 8.078 11.294c.772 1.08 1.413 1.973 1.425 1.984.016.017.241.02 1.05.017l1.03-.004-2.694-3.766L7.796 5.75 5.722 2.852l-1.039-.004-1.039-.004z" clip-rule="evenodd"/>
+  </symbol>
+</svg>
+</file>
+
+<file path="README.md">
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+</file>
+
+<file path="src/App.css">
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+#center {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+  flex-grow: 1;
+
+  @media (max-width: 1024px) {
+    padding: 32px 20px 24px;
+    gap: 18px;
+  }
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+}
+</file>
+
+<file path="src/assets/react.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
+</file>
+
+<file path="src/assets/vite.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="47" fill="none" aria-labelledby="vite-logo-title" viewBox="0 0 77 47"><title id="vite-logo-title">Vite</title><style>.parenthesis{fill:#000}@media (prefers-color-scheme:dark){.parenthesis{fill:#fff}}</style><path fill="#9135ff" d="M40.151 45.71c-.663.844-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.493c-.92 0-1.457-1.04-.92-1.788l7.479-10.471c1.07-1.498 0-3.578-1.842-3.578H15.443c-.92 0-1.456-1.04-.92-1.788l9.696-13.576c.213-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.472c-1.07 1.497 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.087.89 1.83L40.153 45.712z"/><mask id="a" width="48" height="47" x="14" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M40.047 45.71c-.663.843-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.389c-.92 0-1.457-1.04-.92-1.788l7.479-10.472c1.07-1.497 0-3.578-1.842-3.578H15.34c-.92 0-1.456-1.04-.92-1.788l9.696-13.575c.213-.297.556-.474.92-.474H53.93c.92 0 1.456 1.04.92 1.788L47.37 13.03c-1.07 1.498 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.088.89 1.831L40.049 45.712z"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#eee6ff" rx="5.508" ry="14.704" transform="rotate(269.814 20.96 11.29)scale(-1 1)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#eee6ff" rx="10.399" ry="29.851" transform="rotate(89.814 -16.902 -8.275)scale(1 -1)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#8900ff" rx="5.508" ry="30.487" transform="rotate(89.814 -19.197 -7.127)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.928 4.177)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.738 5.52)scale(1 -1)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#eee6ff" rx="14.072" ry="22.078" transform="rotate(93.35 31.245 55.578)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx="14.592" cy="9.743" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(39.51 14.592 9.743)"/></g><g filter="url(#k)"><ellipse cx="61.728" cy="-5.321" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 61.728 -5.32)"/></g><g filter="url(#l)"><ellipse cx="55.618" cy="7.104" fill="#00c2ff" rx="5.971" ry="9.665" transform="rotate(37.892 55.618 7.104)"/></g><g filter="url(#m)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#n)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#o)"><ellipse cx="49.857" cy="30.678" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 49.857 30.678)"/></g><g filter="url(#p)"><ellipse cx="52.623" cy="33.171" fill="#00c2ff" rx="5.971" ry="15.297" transform="rotate(37.892 52.623 33.17)"/></g></g><path d="M6.919 0c-9.198 13.166-9.252 33.575 0 46.789h6.215c-9.25-13.214-9.196-33.623 0-46.789zm62.424 0h-6.215c9.198 13.166 9.252 33.575 0 46.789h6.215c9.25-13.214 9.196-33.623 0-46.789" class="parenthesis"/><defs><filter id="b" width="60.045" height="41.654" x="-5.564" y="16.92" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-40.407" y="-6.762" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-35.435" y="2.801" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-30.84" y="20.8" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-29.307" y="21.949" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="29.961" y="-17.13" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-13.43" y="-22.082" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="34.321" y="-37.644" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="38.847" y="-10.552" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="22.45" y="-1.645" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="32.919" y="11.36" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="src/components/AdminLayout.jsx">
+import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+
+
+
+export default function AdminLayout() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Grab the role from local storage!
+  const userRole = localStorage.getItem('userRole') || 'Customer'; 
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [profileData, setProfileData] = useState({ newUsername: '', currentPassword: '', newPassword: '' });
+  const [profileMessage, setProfileMessage] = useState(null);
+
+  const getLinkStyle = (path) => ({
+    display: 'block',
+    padding: '10px 15px',
+    marginBottom: '5px',
+    color: location.pathname === path ? 'white' : '#333',
+    backgroundColor: location.pathname === path ? '#007bff' : 'transparent',
+    textDecoration: 'none',
+    borderRadius: '4px',
+    fontWeight: location.pathname === path ? 'bold' : 'normal',
+  });
+
+  const handleUpdateProfile = (e) => {
+    e.preventDefault();
+    setProfileMessage(null);
+
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const token = localStorage.getItem('jwtToken');
+
+    axios.put(`${apiUrl}/api/Auth/profile`, profileData, { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => {
+        setProfileMessage({ type: 'success', text: 'Profile updated! Please log in again.' });
+        setTimeout(() => {
+          handleLogout(); // Force them to log in with their new credentials!
+        }, 2000);
+      })
+      .catch(err => {
+        setProfileMessage({ type: 'error', text: err.response?.data?.message || 'Failed to update profile.' });
+      });
+  };
+
+  const handleLogout = () => {
+    // 1. Throw away the security token
+    localStorage.removeItem('jwtToken');
+    // 2. Kick the user back to the login page
+    navigate('/login'); 
+  };
+
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f4f6f8' }}>
+      
+      {/* SIDEBAR */}
+      <nav style={{ width: '250px', backgroundColor: 'white', borderRight: '1px solid #ddd', padding: '20px', display: 'flex', flexDirection: 'column' }}>
+        <h1 style={{ fontSize: '20px', marginBottom: '30px', color: '#007bff' }}>HotelBook Dashboard</h1>
+        
+        {/* Everyone sees these (Front Desk & Admin) */}
+        <Link to="/" style={getLinkStyle('/')}>📊 Overview</Link>
+        <Link to="/book-room" style={getLinkStyle('/book-room')}>✍️ Book a Room</Link>
+        <Link to="/rooms" style={getLinkStyle('/rooms')}>🛏️ Manage Rooms</Link>
+        <Link to="/reservations" style={getLinkStyle('/reservations')}>📅 Reservations</Link>
+        <Link to="/profile" className="sidebar-link">👤 My Profile</Link>
+
+        {/* ONLY Admins see these links! */}
+        {userRole === 'Admin' && (
+          <>
+            <div style={{ margin: '20px 0 10px 0', fontSize: '12px', color: '#888', fontWeight: 'bold', textTransform: 'uppercase' }}>Admin Tools</div>
+            <Link to="/prices" style={getLinkStyle('/prices')}>💰 Manage Prices</Link>
+            <Link to="/staff" style={getLinkStyle('/staff')}>👥 Register Staff</Link>
+          </>
+        )}
+
+        {/* EVERYONE sees the Log Out button, safely outside the Admin block! */}
+        <div style={{ marginTop: 'auto', display: 'flex', gap: '10px' }}>
+          
+          {/* 1. THE SETTINGS (GEAR) BUTTON */}
+          <button 
+            onClick={() => setIsSettingsOpen(true)} 
+            style={{ 
+              flex: 1, padding: '12px', backgroundColor: '#6c757d', color: 'white', 
+              border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
+            }}
+          >
+            ⚙️ Settings
+          </button>
+
+          {/* 2. THE LOG OUT BUTTON */}
+          <button 
+            onClick={handleLogout} 
+            style={{ 
+              flex: 1, padding: '12px', backgroundColor: '#dc3545', color: 'white', 
+              border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
+            }}
+          >
+            🚪 Log Out
+          </button>
+          
+        </div>
+      
+      </nav>
+
+      {/* MAIN CONTENT AREA */}
+      <main style={{ flex: 1, padding: '30px' }}>
+        <Outlet/>
+      </main>
+{isSettingsOpen && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', 
+          backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', 
+          justifyContent: 'center', alignItems: 'center', zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white', padding: '30px', borderRadius: '8px', 
+            width: '400px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+          }}>
+            <h3 style={{ marginTop: 0, borderBottom: '1px solid #ccc', paddingBottom: '10px', color: '#333' }}>
+              Profile Settings
+            </h3>
+            
+            <form onSubmit={handleUpdateProfile} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              
+              {profileMessage && (
+                <div style={{ padding: '10px', borderRadius: '4px', backgroundColor: profileMessage.type === 'success' ? '#d4edda' : '#f8d7da', color: profileMessage.type === 'success' ? '#155724' : '#721c24', fontSize: '14px' }}>
+                  {profileMessage.text}
+                </div>
+              )}
+
+              <div>
+                <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>New Username</label>
+                <input type="text" placeholder="Leave blank to keep current" value={profileData.newUsername} onChange={e => setProfileData({...profileData, newUsername: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>Current Password</label>
+                <input type="password" required placeholder="Required to save changes" value={profileData.currentPassword} onChange={e => setProfileData({...profileData, currentPassword: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>New Password</label>
+                <input type="password" placeholder="Leave blank to keep current" value={profileData.newPassword} onChange={e => setProfileData({...profileData, newPassword: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                <button type="button" onClick={() => setIsSettingsOpen(false)} style={{ flex: 1, padding: '10px', backgroundColor: '#ccc', color: '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                  Cancel
+                </button>
+                <button type="submit" style={{ flex: 1, padding: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/CustomerLayout.jsx">
+import { useState } from 'react';
+import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
+
+
+
+export default function CustomerLayout() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const getLinkStyle = (path) => ({
+    display: 'block',
+    padding: '10px 15px',
+    marginBottom: '5px',
+    color: location.pathname === path ? 'white' : '#333',
+    backgroundColor: location.pathname === path ? '#007bff' : 'transparent',
+    textDecoration: 'none',
+    borderRadius: '4px',
+    fontWeight: location.pathname === path ? 'bold' : 'normal',
+  });
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('userRole'); // Good practice to clear this too!
+    navigate('/login'); 
+  };
+
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f4f6f9' }}>
+      
+      {/* CUSTOMER SIDEBAR */}
+      <nav style={{ width: '250px', backgroundColor: 'white', borderRight: '1px solid #ddd', padding: '20px', display: 'flex', flexDirection: 'column' }}>
+        <h1 style={{ fontSize: '20px', marginBottom: '30px', color: '#007bff', textAlign: 'center' }}>My HotelBook</h1>
+        
+        <Link to="/customer" style={getLinkStyle('/customer')}>🏨 Browse Rooms</Link>
+        <Link to="/customer/book" style={getLinkStyle('/customer/book')}>✍️ Book a Room</Link>
+        <Link to="/customer/reservations" style={getLinkStyle('/customer/reservations')}>📅 My Reservations</Link>
+        <Link to="/customer/profile" className="sidebar-link">👤 My Profile</Link>
+
+        {/* BOTTOM BUTTON ROW */}
+        <div style={{ marginTop: 'auto', display: 'flex', gap: '10px' }}>
+          <button 
+            onClick={() => setIsSettingsOpen(true)} 
+            style={{ flex: 1, padding: '12px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+          >
+            ⚙️ Settings
+          </button>
+          <button 
+            onClick={handleLogout} 
+            style={{ flex: 1, padding: '12px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+          >
+            🚪 Log Out
+          </button>
+        </div>
+      </nav>
+
+      {/* MAIN CONTENT AREA */}
+      <main style={{ flex: 1, padding: '30px' }}>
+        <Outlet />
+      </main>
+
+      {/* SETTINGS MODAL (You can copy your exact modal code from AdminLayout here!) */}
+      {isSettingsOpen && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+            <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px' }}>
+                <h3>Settings (Coming Soon)</h3>
+                <button onClick={() => setIsSettingsOpen(false)}>Close</button>
+            </div>
+        </div>
+      )}
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/RoomMatrix.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export default function RoomMatrix() {
+  const [rooms, setRooms] = useState([]);
+  const [reservations, setReservations] = useState([]);
+  const [dates, setDates] = useState(() => {
+    const today = new Date();
+    return Array.from({ length: 14 }).map((_, i) => {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      return d;
+    });
+  });
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem('jwtToken');
+  const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+  useEffect(() => {
+    // Only fetch Rooms and Reservations here!
+    const fetchData = async () => {
+      try {
+        const roomsRes = await axios.get(`${apiUrl}/api/Rooms`, authConfig);
+        const resRes = await axios.get(`${apiUrl}/api/Reservations`, authConfig);
+        
+        // Handle normal arrays or $values depending on how C# serialized it
+        setRooms(roomsRes.data.$values || roomsRes.data);
+        setReservations(resRes.data.$values || resRes.data);
+      } catch (error) {
+        console.error("Error fetching matrix data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // 3. The Core Logic: Check if a room is booked on a specific date
+  const checkAvailability = (roomId, targetDate) => {
+    const activeRes = reservations.find(r => {
+      // Ignore cancelled bookings
+      if (r.status === "Cancelled") return false;
+
+      const checkIn = new Date(r.checkInDate);
+      const checkOut = new Date(r.checkOutDate);
+      
+      // Reset times to midnight so we strictly compare the dates
+      checkIn.setHours(0,0,0,0);
+      checkOut.setHours(0,0,0,0);
+      const target = new Date(targetDate);
+      target.setHours(0,0,0,0);
+
+      // It is booked if the target date falls between Check-In and BEFORE Check-out
+      return r.roomId === roomId && target >= checkIn && target < checkOut;
+    });
+
+    if (activeRes) {
+      return { isBooked: true, text: `Res #${activeRes.id}` };
+    }
+    return { isBooked: false, text: 'Available' };
+  };
+
+  return (
+    <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', overflowX: 'auto' }}>
+      <h3 style={{ marginTop: 0, color: '#333' }}>14-Day Room Availability Matrix</h3>
+      
+      <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center', minWidth: '800px' }}>
+        <thead>
+          <tr>
+            <th style={{ padding: '10px', border: '1px solid #ddd', backgroundColor: '#f8f9fa', position: 'sticky', left: 0, zIndex: 2 }}>Room</th>
+            {dates.map(date => (
+              <th key={date} style={{ padding: '10px', border: '1px solid #ddd', backgroundColor: '#f8f9fa', fontSize: '12px' }}>
+                {date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rooms.map(room => (
+            <tr key={room.id}>
+              {/* Room Name Column */}
+              <td style={{ padding: '10px', border: '1px solid #ddd', fontWeight: 'bold', backgroundColor: 'white', position: 'sticky', left: 0 }}>
+                {room.roomNumber} <br/><span style={{fontSize: '11px', color: '#666', fontWeight: 'normal'}}>{room.roomType || room.roomTypeName}</span>
+              </td>
+              
+              {/* The Date Grid */}
+              {dates.map(date => {
+                const status = checkAvailability(room.id, date);
+                return (
+                  <td 
+                    key={date} 
+                    style={{ 
+                      padding: '10px', 
+                      border: '1px solid #ddd', 
+                      backgroundColor: status.isBooked ? '#f8d7da' : '#d4edda',
+                      color: status.isBooked ? '#721c24' : '#155724',
+                      fontSize: '12px',
+                      fontWeight: status.isBooked ? 'bold' : 'normal'
+                    }}
+                  >
+                    {status.text}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+</file>
+
+<file path="src/index.css">
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+</file>
+
+<file path="src/main.jsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+</file>
+
+<file path="src/pages/CustomerOverview.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+export default function CustomerOverview() {
+  const [roomTypes, setRoomTypes] = useState([]);
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem('jwtToken');
+  const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+  useEffect(() => {
+    // Fetching the Room Types to use as a catalog
+    axios.get(`${apiUrl}/api/RoomTypes`, authConfig)
+      .then(res => setRoomTypes(res.data))
+      .catch(err => console.error("Could not fetch catalog", err));
+  }, []);
+
+  return (
+    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <h2 style={{ color: '#333', marginBottom: '10px' }}>Welcome to HotelBook</h2>
+      <p style={{ color: '#666', marginBottom: '30px' }}>Browse our available room types and find the perfect stay.</p>
+
+      {/* CSS GRID FOR BEAUTIFUL CARDS */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+        
+        {roomTypes.map(rt => (
+          <div key={rt.id} style={{ backgroundColor: 'white', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', display: 'flex', flexDirection: 'column' }}>
+            
+            {/* Fake Image Placeholder */}
+            <div style={{ height: '150px', backgroundColor: '#e9ecef', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#adb5bd', fontSize: '40px' }}>
+              🏨
+            </div>
+
+            <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <h3 style={{ margin: '0 0 10px 0', color: '#007bff' }}>{rt.name || rt.typeName}</h3>
+              
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px', color: '#555' }}>
+                <span><strong>Capacity:</strong> {rt.capacity} Pax</span>
+                <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#28a745' }}>₱{rt.basePrice.toFixed(2)} <span style={{ fontSize: '12px', color: '#888' }}>/night</span></span>
+              </div>
+
+              {/* Pushes the button to the bottom of the card */}
+              <button 
+                onClick={() => navigate('/customer/book')}
+                style={{ marginTop: 'auto', padding: '12px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', width: '100%' }}
+              >
+                Book This Room
+              </button>
+            </div>
+          </div>
+        ))}
+
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/CustomerReservations.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+
+const formatBeautifulDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+};
+
+export default function CustomerReservations() {
+  const [reservations, setReservations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [filterStatus, setFilterStatus] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5
+  
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem('jwtToken');
+  const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+  useEffect(() => {
+    // We hit the new endpoint we just created!
+    axios.get(`${apiUrl}/api/Reservations/my-reservations`, authConfig)
+      .then(res => {
+        setReservations(res.data);
+      })
+      .catch(err => console.error("Could not fetch reservations", err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  // 1. First, filter the list based on the dropdown selection
+  const filteredReservations = reservations.filter(res => {
+    if (filterStatus === 'All') return true;
+   return res.status === filterStatus || res.paymentStatus === filterStatus;
+  });
+
+  // 2. Then, chop the filtered list into the correct page size
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  
+  // THIS is the array you will map over in your HTML!
+  const currentItems = filteredReservations.slice(indexOfFirstItem, indexOfLastItem);
+  
+  // 3. Calculate total pages for the buttons
+  const totalPages = Math.ceil(filteredReservations.length / itemsPerPage);
+
+  return (
+    <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+      <h2 style={{ color: '#333', marginBottom: '20px' }}>My Reservation History</h2>
+<div style={{ marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <strong>Filter by Status:</strong>
+        <select 
+          value={filterStatus} 
+          onChange={(e) => {
+            setFilterStatus(e.target.value);
+            setCurrentPage(1); // Reset to page 1 when changing filters!
+          }}
+          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+        >
+          <option value="All">All Reservations</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Paid">Paid</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      {isLoading ? (
+        <p>Loading your history...</p>
+      ) : reservations.length === 0 ? (
+        <div style={{ padding: '30px', textAlign: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+          <p style={{ color: '#666', fontSize: '18px' }}>You don't have any reservations yet.</p>
+        </div>
+      ) : (
+
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          {currentItems.map(res => (
+            <div key={res.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+              
+              <div>
+                <h4 style={{ margin: '0 0 5px 0', color: '#007bff' }}>Room #{res.roomNumber || res.roomId}</h4>
+                <div style={{ fontSize: '14px', color: '#555' }}>
+                  <strong>Check-in:</strong> {formatBeautifulDate(res.checkInDate)} | <strong>Check-out:</strong> {formatBeautifulDate(res.checkOutDate)}
+                </div>
+                <div style={{ fontSize: '14px', color: '#555', marginTop: '5px' }}>
+                  <strong>Total:</strong> ₱{res.totalPrice.toFixed(2)} 
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-end' }}>
+                {/* Status Badges */}
+                <span style={{ padding: '5px 10px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold', backgroundColor: res.status === 'Confirmed' ? '#d4edda' : '#fff3cd', color: res.status === 'Confirmed' ? '#155724' : '#856404' }}>
+                  {res.status}
+                </span>
+                
+                <span style={{ padding: '5px 10px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold', backgroundColor: res.paymentStatus === 'Paid' ? '#d1ecf1' : '#f8d7da', color: res.paymentStatus === 'Paid' ? '#0c5460' : '#721c24' }}>
+                  Payment: {res.paymentStatus || 'Pending'}
+                </span>
+              </div>
+
+            </div>
+          ))}
+
+          {/* PAGINATION CONTROLS */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+        <button 
+          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          style={{ padding: '8px 16px', cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}
+        >
+          Previous
+        </button>
+        
+        <span>Page {currentPage} of {totalPages || 1}</span>
+        
+        <button 
+          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages || totalPages === 0}
+          style={{ padding: '8px 16px', cursor: (currentPage === totalPages || totalPages === 0) ? 'not-allowed' : 'pointer' }}
+        >
+          Next
+        </button>
+      </div>
+        </div>
+      )}
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/Login.jsx">
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import {
+  FaUser,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaHotel,
+} from "react-icons/fa";
+
+import "./Login.css";
+
+export default function Login() {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const handleInputChange = (e) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+    setError(null);
+
+    axios
+      .post(`${apiUrl}/api/Auth/login`, credentials)
+      .then((response) => {
+        const token = response.data.token || response.data;
+
+        localStorage.setItem("jwtToken", token);
+
+        let finalRole = "Customer";
+
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+
+          const roleKey =
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+
+          finalRole = payload[roleKey] || payload.role || "Customer";
+        } catch (e) {
+          console.error(e);
+        }
+
+        localStorage.setItem("userRole", finalRole);
+
+        if (finalRole === "Customer") navigate("/customer");
+        else navigate("/");
+      })
+      .catch(() => {
+        setError("Invalid username or password.");
+        setIsLoading(false);
+      });
+  };
+
+  return (
+    <div className="login-page">
+      <div className="overlay">
+
+        <div className="login-card">
+
+          <div className="logo">
+            <FaHotel />
+          </div>
+
+          <h1>HotelBook</h1>
+
+          <p>Welcome back! Please login to continue.</p>
+
+          {error && <div className="error">{error}</div>}
+
+          <form onSubmit={handleLogin}>
+
+            <div className="input-group">
+              <FaUser className="icon" />
+              <input
+                type="text"
+                placeholder="Username or Email"
+                name="username"
+                value={credentials.username}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <FaLock className="icon" />
+
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                name="password"
+                value={credentials.password}
+                onChange={handleInputChange}
+                required
+              />
+
+              <button
+                type="button"
+                className="eye-btn"
+                onClick={() =>
+                  setShowPassword(!showPassword)
+                }
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              className="login-btn"
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing In..." : "Sign In"}
+            </button>
+
+          </form>
+
+          <div className="register-link">
+            Don't have an account?
+
+            <Link to="/register">
+              Register
+            </Link>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/ManagePrices.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export default function ManagePrices() {
+  // --- STATE FOR VOUCHERS ---
+  const [voucherData, setVoucherData] = useState({ code: '', discountPercentage: '' });
+  const [voucherMessage, setVoucherMessage] = useState(null);
+  const [isVoucherLoading, setIsVoucherLoading] = useState(false);
+
+  // --- STATE FOR ROOM PRICES ---
+  const [roomTypes, setRoomTypes] = useState([]);
+  const [priceMessage, setPriceMessage] = useState(null);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem('jwtToken');
+  const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+ const fetchRoomTypes = () => {
+    axios.get(`${apiUrl}/api/RoomTypes`, authConfig)
+      .then(res => setRoomTypes(res.data))
+      .catch(err => console.error("Could not fetch room types", err));
+  };
+
+  // 2. THEN, call the function inside useEffect!
+  useEffect(() => {
+    fetchRoomTypes();
+  }, []);
+
+  // --- HANDLERS ---
+  const handleVoucherSubmit = (e) => {
+    e.preventDefault();
+    setIsVoucherLoading(true);
+    // Replace with your actual Voucher creation endpoint
+    axios.post(`${apiUrl}/api/Payments/vouchers`, voucherData, authConfig)
+      .then(() => {
+        setVoucherMessage({ type: 'success', text: 'Voucher created successfully!' });
+        setVoucherData({ code: '', discountPercentage: '' });
+      })
+      .catch(err => setVoucherMessage({ type: 'error', text: 'Failed to create voucher.' }))
+      .finally(() => setIsVoucherLoading(false));
+  };
+
+  const handlePriceChange = (id, newPrice) => {
+    // Update the price in the local React state as the user types
+    setRoomTypes(roomTypes.map(rt => 
+      rt.id === id ? { ...rt, basePrice: newPrice } : rt
+    ));
+  };
+
+  const handleUpdatePrice = (id, newPrice) => {
+    setPriceMessage(null);
+    const priceToUpdate = parseFloat(newPrice);
+
+    // Send the new price to the C# backend!
+    axios.patch(`${apiUrl}/api/RoomTypes/${id}/price`, { basePrice: priceToUpdate }, authConfig)
+      .then(() => {
+        setPriceMessage({ type: 'success', text: 'Price updated successfully!' });
+        fetchRoomTypes(); // Refresh to ensure we have the latest DB data
+      })
+      .catch(err => {
+        setPriceMessage({ type: 'error', text: err.response?.data?.message || 'Failed to update price.' });
+      });
+  };
+
+  return (
+    <div style={{ padding: '30px', maxWidth: '1000px', margin: '0 auto' }}>
+      <h2 style={{ color: '#007bff', marginBottom: '30px', textAlign: 'center' }}>Manage Pricing & Discounts</h2>
+
+      {/* TWO COLUMN DASHBOARD LAYOUT */}
+      <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        
+        {/* LEFT COLUMN: CREATE VOUCHER */}
+        <div style={{ flex: '1 1 400px', backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+          <h3 style={{ textAlign: 'center', marginBottom: '20px', color: '#333' }}>Create Discount Voucher</h3>
+          
+          {voucherMessage && (
+            <div style={{ padding: '10px', marginBottom: '15px', borderRadius: '4px', backgroundColor: voucherMessage.type === 'success' ? '#d4edda' : '#f8d7da', color: voucherMessage.type === 'success' ? '#155724' : '#721c24' }}>
+              {voucherMessage.text}
+            </div>
+          )}
+
+          <form onSubmit={handleVoucherSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>Voucher Code</label>
+              <input type="text" placeholder="e.g., HOLIDAY25" value={voucherData.code} onChange={(e) => setVoucherData({...voucherData, code: e.target.value.toUpperCase()})} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>Discount Percentage (%)</label>
+              <input type="number" step="0.01" placeholder="e.g., 15.5" value={voucherData.discountPercentage} onChange={(e) => setVoucherData({...voucherData, discountPercentage: e.target.value})} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+            </div>
+            <button type="submit" disabled={isVoucherLoading} style={{ marginTop: '10px', padding: '12px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+              {isVoucherLoading ? 'Creating...' : 'Create Voucher'}
+            </button>
+          </form>
+        </div>
+
+        {/* RIGHT COLUMN: EDIT ROOM PRICES */}
+        <div style={{ flex: '1 1 500px', backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+          <h3 style={{ textAlign: 'center', marginBottom: '20px', color: '#333' }}>Current Room Prices</h3>
+
+          {priceMessage && (
+            <div style={{ padding: '10px', marginBottom: '15px', borderRadius: '4px', backgroundColor: priceMessage.type === 'success' ? '#d4edda' : '#f8d7da', color: priceMessage.type === 'success' ? '#155724' : '#721c24' }}>
+              {priceMessage.text}
+            </div>
+          )}
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            {roomTypes.map(rt => (
+              <div key={rt.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px', border: '1px solid #eee', borderRadius: '6px', backgroundColor: '#f8f9fa' }}>
+                <div style={{ fontWeight: 'bold', fontSize: '16px', color: '#444' }}>
+                  {rt.name || rt.typeName} {/* Fallback depending on your C# DTO name */}
+                </div>
+                
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontWeight: 'bold', color: '#555' }}>₱</span>
+                  <input 
+                    type="number" 
+                    value={rt.basePrice} 
+                    onChange={(e) => handlePriceChange(rt.id, e.target.value)}
+                    style={{ width: '100px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', textAlign: 'right' }} 
+                  />
+                  <button 
+                    onClick={() => handleUpdatePrice(rt.id, rt.basePrice)}
+                    style={{ padding: '8px 15px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            ))}
+            
+            {roomTypes.length === 0 && (
+              <p style={{ textAlign: 'center', color: '#777', fontStyle: 'italic' }}>Loading room types...</p>
+            )}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/ManageReservations.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const formatBeautifulDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+};
+
+export default function ManageReservations() {
+  const [reservations, setReservations] = useState([]);
+  const [viewModalData, setViewModalData] = useState(null);
+  const [error, setError] = useState(null);
+  
+  // SEPARATE FILTER STATES
+  const [bookingFilter, setBookingFilter] = useState('All');
+  const [paymentFilter, setPaymentFilter] = useState('All');
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem('jwtToken');
+  const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+  const fetchReservations = () => {
+    axios.get(`${apiUrl}/api/Reservations`, authConfig)
+      .then(res => {
+        setReservations(res.data);
+      })
+      .catch(err => console.error("Error fetching reservations", err));
+  };
+
+  useEffect(() => {
+    fetchReservations();
+  }, []);
+
+  const handleApplyVoucher = (id) => {
+    const code = prompt("Enter your discount voucher code:");
+    if (!code) return;
+
+    axios.patch(`${apiUrl}/api/Payments/${id}/apply-voucher`, { voucherCode: code }, authConfig)
+      .then(response => {
+        alert(`Success! New Total: $${response.data.newTotal}`);
+        fetchReservations();
+      })
+      .catch(err => {
+        alert(err.response?.data?.message || "Invalid voucher.");
+      });
+  };
+
+  const handleProcessPayment = (id) => {
+    if (!window.confirm("Are you ready to process this payment?")) return;
+
+    axios.patch(`${apiUrl}/api/Payments/${id}/process`, {}, authConfig)
+      .then(() => {
+        alert("Payment processed successfully!");
+        fetchReservations();
+      })
+      .catch(err => {
+        alert(err.response?.data?.message || "Payment failed.");
+      });
+  };
+
+  const handleCancelReservation = (id) => {
+    if (!window.confirm("Are you sure you want to cancel this reservation?")) return;
+
+    axios.patch(`${apiUrl}/api/Payments/${id}/cancel`, {}, authConfig)
+      .then(() => {
+        alert("Reservation cancelled.");
+        fetchReservations();
+      })
+      .catch(err => {
+        alert(err.response?.data?.message || "Could not cancel.");
+      });
+  };
+
+  // FILTER LOGIC MATCHING BOTH DROPDOWNS
+  const filteredReservations = reservations.filter(res => {
+    const matchesBooking = bookingFilter === 'All' || res.status === bookingFilter;
+    const matchesPayment = paymentFilter === 'All' || (res.paymentStatus || 'Pending') === paymentFilter;
+    return matchesBooking && matchesPayment;
+  });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredReservations.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredReservations.length / itemsPerPage);
+
+  return (
+    <div>
+      <h2>Manage Reservations</h2>
+      
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      
+      {/* SEPARATE FILTER DROPDOWNS */}
+      <div style={{ marginBottom: '20px', display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
+        
+        {/* Booking Status Dropdown */}
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <strong>Booking Status:</strong>
+          <select 
+            value={bookingFilter} 
+            onChange={(e) => {
+              setBookingFilter(e.target.value);
+              setCurrentPage(1);
+            }}
+            style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+          >
+            <option value="All">All Bookings</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        {/* Payment Status Dropdown */}
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <strong>Payment Status:</strong>
+          <select 
+            value={paymentFilter} 
+            onChange={(e) => {
+              setPaymentFilter(e.target.value);
+              setCurrentPage(1);
+            }}
+            style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+          >
+            <option value="All">All Payments</option>
+            <option value="Pending">Pending</option>
+            <option value="Paid">Paid</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', border: '1px solid #ddd', marginTop: '20px', overflowX: 'auto' }}>
+        {reservations.length === 0 && !error ? (
+          <p>There are currently no reservations in the system.</p>
+        ) : (
+          <table style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: 'white' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#f8f9fa', borderBottom: '2px solid #ddd' }}>
+                <th>ID</th>
+                <th>Guest Name</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Total Price</th>
+                <th>Payment Status</th> 
+                <th>Actions</th>        
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.map(res => (
+                <tr key={res.id}>
+                  <td>#{res.id}</td>
+                  <td>{res.guestName}</td>
+                  <td>{formatBeautifulDate(res.checkInDate)}</td>
+                  <td>{formatBeautifulDate(res.checkOutDate)}</td>
+                  <td>${res.totalPrice}</td>
+                  <td>
+                    <span style={{ 
+                      padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold',
+                      backgroundColor: res.paymentStatus === 'Paid' ? '#d4edda' : res.paymentStatus === 'Cancelled' ? '#f8d7da' : '#fff3cd',
+                      color: res.paymentStatus === 'Paid' ? '#155724' : res.paymentStatus === 'Cancelled' ? '#721c24' : '#856404'
+                    }}>
+                      {res.paymentStatus || 'Pending'}
+                    </span>
+                  </td>
+                  <td>
+                    <button onClick={() => setViewModalData(res)} style={{ marginRight: '5px', padding: '5px 10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                      View
+                    </button>
+                    {res.paymentStatus !== 'Paid' && res.paymentStatus !== 'Cancelled' && (
+                      <>
+                        <button onClick={() => handleProcessPayment(res.id)} style={{ marginRight: '5px', padding: '5px 10px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Pay</button>
+                        <button onClick={() => handleApplyVoucher(res.id)} style={{ marginRight: '5px', padding: '5px 10px', backgroundColor: '#17a2b8', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Voucher</button>
+                      </>
+                    )}
+                    {res.paymentStatus !== 'Cancelled' && (
+                      <button onClick={() => handleCancelReservation(res.id)} style={{ padding: '5px 10px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Cancel</button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {/* VIEW RESERVATION MODAL */}
+      {viewModalData && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', 
+          backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', 
+          justifyContent: 'center', alignItems: 'center', zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white', padding: '30px', borderRadius: '8px', 
+            width: '400px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+          }}>
+            <h3 style={{ marginTop: 0, borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
+              Room #{viewModalData.roomNumber || viewModalData.roomId} Details
+            </h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+              <div><strong>Guest Name:</strong> {viewModalData.guestName}</div>
+              <div><strong>Room Assigned:</strong> Room {viewModalData.roomNumber} ({viewModalData.roomTypeName})</div>
+              <div><strong>Check-In:</strong> {formatBeautifulDate(viewModalData.checkInDate)}</div>
+              <div><strong>Check-Out:</strong> {formatBeautifulDate(viewModalData.checkOutDate)}</div>
+              <div><strong>Total Price:</strong> ${viewModalData.totalPrice}</div>
+              <div><strong>Payment Status:</strong> {viewModalData.paymentStatus}</div>
+              <div><strong>Booking Status:</strong> {viewModalData.status}</div>
+            </div>
+
+            <button 
+              onClick={() => setViewModalData(null)} 
+              style={{ width: '100%', padding: '10px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* PAGINATION CONTROLS */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+        <button 
+          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          style={{ padding: '8px 16px', cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}
+        >
+          Previous
+        </button>
+        
+        <span>Page {currentPage} of {totalPages || 1}</span>
+        
+        <button 
+          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages || totalPages === 0}
+          style={{ padding: '8px 16px', cursor: (currentPage === totalPages || totalPages === 0) ? 'not-allowed' : 'pointer' }}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/Overview.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export default function Overview() {
+  // 1. Set up our state to hold the calculated numbers
+  const [stats, setStats] = useState({
+    totalBookings: 0,
+    activeGuests: 0,
+    availableRooms: 0,
+    totalRevenue: 0,
+    isLoading: true
+  });
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem('jwtToken');
+  const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+  useEffect(() => {
+    const fetchDashboardStats = async () => {
+      try {
+        // 2. Fetch both Rooms and Reservations simultaneously for speed!
+        const [resResponse, roomsResponse] = await Promise.all([
+          axios.get(`${apiUrl}/api/Reservations`, authConfig),
+          axios.get(`${apiUrl}/api/Rooms`, authConfig)
+        ]);
+
+        // Safety check for Dapper/C# serialization formatting
+        const reservations = resResponse.data.$values || resResponse.data;
+        const rooms = roomsResponse.data.$values || roomsResponse.data;
+
+        // Get exactly midnight today to accurately calculate who is in the hotel right now
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // --- MATH & CALCULATIONS ---
+        
+        // A. Total Confirmed Bookings (Ignore cancelled ones)
+        const confirmedReservations = reservations.filter(r => r.status === "Confirmed");
+        
+        // B. Total Revenue (Sum up the price of every confirmed booking)
+        const revenue = confirmedReservations.reduce((sum, r) => sum + r.totalPrice, 0);
+
+        // C. Find out who is physically in the hotel TODAY
+        const currentlyOccupied = confirmedReservations.filter(r => {
+            const checkIn = new Date(r.checkInDate);
+            const checkOut = new Date(r.checkOutDate);
+            checkIn.setHours(0,0,0,0);
+            checkOut.setHours(0,0,0,0);
+            
+            // They are here if today is on or after check-in, and strictly before check-out
+            return today >= checkIn && today < checkOut;
+        });
+
+        // D. Count total guests sleeping in the hotel tonight
+        const activeGuests = currentlyOccupied.reduce((sum, r) => sum + r.guestsCount, 0);
+
+        // E. Calculate Available Rooms (Total physical rooms minus the ones occupied today)
+        const totalPhysicalRooms = rooms.length;
+        const occupiedRoomsToday = currentlyOccupied.length;
+        const availableRooms = totalPhysicalRooms - occupiedRoomsToday;
+
+        // 3. Save it all to state to trigger the UI render
+        setStats({
+          totalBookings: confirmedReservations.length,
+          activeGuests: activeGuests,
+          availableRooms: availableRooms,
+          totalRevenue: revenue,
+          isLoading: false
+        });
+
+      } catch (error) {
+        console.error("Error fetching overview stats:", error);
+        setStats(prev => ({ ...prev, isLoading: false }));
+      }
+    };
+
+    fetchDashboardStats();
+  }, []);
+
+  if (stats.isLoading) {
+    return <p style={{ padding: '20px', fontSize: '18px', color: '#666' }}>Calculating dashboard statistics...</p>;
+  }
+
+  return (
+    <div style={{ padding: '20px' }}>
+      <h2 style={{ marginBottom: '20px', color: '#333' }}>Live Hotel Statistics</h2>
+      
+      {/* CSS Grid creates a responsive row of 4 equally-sized cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+        
+        {/* Card 1: Available Rooms */}
+        <div style={cardStyle}>
+          <h3 style={titleStyle}>🟢 Available Rooms</h3>
+          <p style={numberStyle}>{stats.availableRooms}</p>
+          <span style={subtextStyle}>Ready for walk-ins today</span>
+        </div>
+
+        {/* Card 2: Active Bookings */}
+        <div style={cardStyle}>
+          <h3 style={titleStyle}>📅 Total Bookings</h3>
+          <p style={numberStyle}>{stats.totalBookings}</p>
+          <span style={subtextStyle}>Upcoming & ongoing</span>
+        </div>
+
+        {/* Card 3: Guests Today */}
+        <div style={cardStyle}>
+          <h3 style={titleStyle}>👥 Guests Today</h3>
+          <p style={numberStyle}>{stats.activeGuests}</p>
+          <span style={subtextStyle}>Checked-in right now</span>
+        </div>
+
+        {/* Card 4: Total Revenue */}
+        <div style={cardStyle}>
+          <h3 style={titleStyle}>💰 Total Revenue</h3>
+          {/* Format the number to look like real Philippine Pesos with commas and 2 decimals! */}
+          <p style={numberStyle}>₱{stats.totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+          <span style={subtextStyle}>From all confirmed bookings</span>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// --- INLINE STYLES ---
+// Using inline objects keeps the component self-contained without needing an external CSS file!
+
+const cardStyle = {
+  backgroundColor: 'white',
+  padding: '20px 15px',
+  borderRadius: '8px',
+  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  textAlign: 'center',
+  borderTop: '4px solid #007bff' // A nice blue accent line at the top
+};
+
+const titleStyle = { margin: '0 0 10px 0', fontSize: '16px', color: '#555' };
+const numberStyle = { margin: '0', fontSize: '36px', fontWeight: 'bold', color: '#333' };
+const subtextStyle = { fontSize: '12px', color: '#888' };
+</file>
+
+<file path="src/pages/Register.jsx">
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import {
+  FaHotel,
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaIdBadge,
+} from "react-icons/fa";
+
+import "./Register.css";
+
+export default function Register() {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const getStrength = (password) => {
+    if (password.length < 6) return "Weak";
+    if (password.length < 10) return "Medium";
+    return "Strong";
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+    setError(null);
+    setSuccessMessage(null);
+
+    axios
+      .post(`${apiUrl}/api/Auth/register`, formData)
+      .then(() => {
+        setSuccessMessage(
+          "Account created successfully! Redirecting..."
+        );
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      })
+      .catch((err) => {
+        setError(
+          err.response?.data?.message ||
+            "Username or Email already exists."
+        );
+        setIsLoading(false);
+      });
+  };
+
+  return (
+    <div className="register-page">
+      <div className="overlay">
+
+        <div className="register-card">
+
+          <div className="logo">
+            <FaHotel />
+          </div>
+
+          <h1>Create Account</h1>
+
+          <p>Join HotelBook today.</p>
+
+          {error && <div className="error">{error}</div>}
+
+          {successMessage && (
+            <div className="success">
+              {successMessage}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+
+            <div className="input-group">
+              <FaUser className="icon" />
+              <input
+                type="text"
+                name="fullName"
+                placeholder="Full Name"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <FaIdBadge className="icon" />
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={formData.username}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <FaEnvelope className="icon" />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <FaLock className="icon" />
+
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+              />
+
+              <button
+                type="button"
+                className="eye-btn"
+                onClick={() =>
+                  setShowPassword(!showPassword)
+                }
+              >
+                {showPassword ? (
+                  <FaEyeSlash />
+                ) : (
+                  <FaEye />
+                )}
+              </button>
+            </div>
+
+            <div className={`strength ${getStrength(formData.password).toLowerCase()}`}>
+              Password Strength: {getStrength(formData.password)}
+            </div>
+
+            <button
+              className="register-btn"
+              disabled={isLoading}
+            >
+              {isLoading
+                ? "Creating Account..."
+                : "Create Account"}
+            </button>
+
+          </form>
+
+          <div className="login-link">
+            Already have an account?
+
+            <Link to="/login">
+              Sign In
+            </Link>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/RegisterStaff.jsx">
+import { useState } from 'react';
+import axios from 'axios';
+
+export default function RegisterStaff() {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    username: '',
+    email: '',
+    password: '',
+    role: 'FrontDesk' // Default to the safest role
+  });
+  
+  const [message, setMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem('jwtToken');
+  
+  // Attach the token so the backend knows an Admin is making this request!
+  const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage(null);
+
+    // Make sure this URL matches your actual C# AuthController endpoint!
+    axios.post(`${apiUrl}/api/Auth/register-staff`, formData, authConfig)
+      .then(response => {
+        setMessage({ type: 'success', text: `Success! ${formData.fullName} has been registered as ${formData.role}.` });
+        
+        // Clear the form for the next entry
+        setFormData({ fullName: '', username: '', email: '', password: '', role: 'FrontDesk' }); 
+      })
+      .catch(err => {
+        setMessage({ type: 'error', text: err.response?.data?.message || 'Failed to register staff member.' });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  return (
+    <div style={{ padding: '30px', maxWidth: '500px', margin: '0 auto' }}>
+      <h2 style={{ color: '#007bff', marginBottom: '20px', textAlign: 'center' }}>Register New Staff</h2>
+      
+      {message && (
+        <div style={{ padding: '15px', marginBottom: '20px', borderRadius: '4px', backgroundColor: message.type === 'success' ? '#d4edda' : '#f8d7da', color: message.type === 'success' ? '#155724' : '#721c24' }}>
+          {message.text}
+        </div>
+      )}
+
+      <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>Full Name</label>
+            <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>Username</label>
+            <input type="text" name="username" value={formData.username} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>Email Address</label>
+            <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>Temporary Password</label>
+            <input type="password" name="password" value={formData.password} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px', color: '#555' }}>Assign Role</label>
+            <select name="role" value={formData.role} onChange={handleChange} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}>
+              <option value="FrontDesk">Front Desk</option>
+              <option value="Admin">System Admin</option>
+            </select>
+          </div>
+
+          <button type="submit" disabled={isLoading} style={{ marginTop: '15px', padding: '12px', backgroundColor: isLoading ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: isLoading ? 'not-allowed' : 'pointer', fontWeight: 'bold', fontSize: '16px' }}>
+            {isLoading ? 'Registering...' : 'Create Staff Account'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="vercel.json">
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "hotelbook-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "react": "^19.2.7",
+    "react-datepicker": "^9.1.0",
+    "react-dom": "^19.2.7",
+    "react-icons": "^5.7.0",
+    "react-router-dom": "^7.18.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "eslint": "^10.6.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "globals": "^17.7.0",
+    "vite": "^8.1.1"
+  }
+}
+</file>
+
+<file path="src/pages/CreateReservation.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
+
+export default function CreateReservation() {
+  const [rooms, setRooms] = useState([]);
+  const [vouchers, setVouchers] = useState([]);
+  const [formData, setFormData] = useState({
+    roomId: '',
+    checkInDate: '',
+    checkOutDate: '',
+    guestsCount: 1
+  });
+  
+  
+  const [disabledDates, setDisabledDates] = useState([]);
+  // NEW: State to track the voucher code
+  const [voucherCode, setVoucherCode] = useState('');
+  
+  const [message, setMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL; // Update if your port is different
+  const token = localStorage.getItem('jwtToken');
+  const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+  useEffect(() => {
+    // Fetch Rooms
+    axios.get(`${apiUrl}/api/Rooms`, authConfig)
+      .then(res => setRooms(res.data))
+      .catch(err => console.error("Could not fetch rooms:", err));
+
+    // NEW: Fetch Vouchers
+   axios.get(`${apiUrl}/api/Payments/vouchers`, authConfig)
+      .then(res => {
+        console.log("VOUCHERS FROM C#:", res.data); // <-- ADD THIS!
+        setVouchers(res.data);
+      })
+      .catch(err => console.error("Could not fetch vouchers:", err));
+  }, []);
+
+  useEffect(() => {
+    // If no room is selected yet, don't do anything
+    if (!formData.roomId) return;
+
+   const fetchRoomReservations = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/api/Reservations/booked-dates/${formData.roomId}`, authConfig);
+        const safeData = response.data.$values || response.data;
+        
+        // Add this to your console so you can literally see the dates arriving!
+        console.log("Booked dates from C#:", safeData); 
+
+        let datesToBlock = [];
+
+        safeData.forEach(reservation => {
+          // Fallback just in case C# capitalized the properties
+          const checkInStr = reservation.checkInDate || reservation.CheckInDate;
+          const checkOutStr = reservation.checkOutDate || reservation.CheckOutDate;
+
+          if (checkInStr && checkOutStr) {
+            // Split the string into Year, Month, Day to bypass timezone shifting
+            const [inYear, inMonth, inDay] = checkInStr.split('-');
+            const [outYear, outMonth, outDay] = checkOutStr.split('-');
+
+            // Create dates locked exactly to local midnight (Note: JS months are 0-indexed!)
+            let currentDate = new Date(inYear, inMonth - 1, inDay);
+            const endDate = new Date(outYear, outMonth - 1, outDay);
+
+            while (currentDate <= endDate) {
+              datesToBlock.push(new Date(currentDate));
+              currentDate.setDate(currentDate.getDate() + 1); // Move forward one day
+            }
+          }
+        });
+        
+        console.log("Final locked dates for calendar:", datesToBlock);
+        setDisabledDates(datesToBlock);
+
+      } catch (error) {
+        console.error("Error fetching reservations for date blocking:", error);
+      }
+    };
+
+    fetchRoomReservations();
+  }, [formData.roomId]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+    
+    if (e.target.name === 'roomId') {
+      setDisabledDates([]);
+    }
+  };
+
+  const handleVoucherChange = (e) => {
+    setVoucherCode(e.target.value.toUpperCase());
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage(null);
+
+    // Note: We are attaching the voucherCode to the payload!
+    // Make sure your C# CreateReservationDto expects this if you want to save it.
+    const payload = { ...formData, voucherCode: voucherCode };
+
+    axios.post(`${apiUrl}/api/Reservations`, payload, authConfig)
+      .then(response => {
+        setMessage({ type: 'success', text: 'Reservation booked successfully!' });
+        setTimeout(() => navigate('/reservations'), 2000);
+      })
+      .catch(err => {
+        setMessage({ type: 'error', text: err.response?.data?.message || 'Failed to book room.' });
+        setIsLoading(false);
+      });
+  };
+
+  // --- DYNAMIC MATH ENGINE --- //
+  
+  const selectedRoom = rooms.find(room => room.id === parseInt(formData.roomId));
+  
+  // Failsafe: Looks for basePrice or pricePerNight just in case C# changed the name!
+  const baseRate = selectedRoom ? (selectedRoom.basePrice || selectedRoom.pricePerNight || 0) : 0; 
+  const capacity = selectedRoom ? (selectedRoom.capacity || 2) : 2;
+
+  // Extra Guest Math
+  const isExtraCharge = selectedRoom && formData.guestsCount > capacity;
+  const extraGuestsCount = isExtraCharge ? (formData.guestsCount - capacity) : 0;
+  const extraChargeTotal = extraGuestsCount * 300; // ₱300 per extra person
+
+ const safeUserInput = voucherCode ? voucherCode.trim().toUpperCase() : '';
+  
+  const foundVoucher = vouchers.find(v => {
+    const dbCode = v.code || v.Code; 
+    
+
+    return dbCode?.trim().toUpperCase() === safeUserInput; 
+  });
+  
+  const discountPercent = foundVoucher ? (foundVoucher.discountPercentage || foundVoucher.DiscountPercentage || 0) : 0;
+  
+  // Final Totals
+  const subtotal = baseRate + extraChargeTotal;
+  const discountAmount = subtotal * (discountPercent / 100);
+  const finalPrice = subtotal - discountAmount;
+
+  return (
+    <div style={{ padding: '30px', maxWidth: '600px', margin: '0 auto' }}>
+      <h2 style={{ color: '#007bff', marginBottom: '20px', textAlign: 'center' }}>Book a Room</h2>
+      
+      {message && (
+        <div style={{ padding: '15px', marginBottom: '20px', borderRadius: '4px', backgroundColor: message.type === 'success' ? '#d4edda' : '#f8d7da', color: message.type === 'success' ? '#155724' : '#721c24' }}>
+          {message.text}
+        </div>
+      )}
+
+      <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          {/* 1. ROOM DROPDOWN (Cleaned up!) */}
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Select Room</label>
+            <select name="roomId" value={formData.roomId} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}>
+              <option value="" disabled>-- Choose a Room --</option>
+              {rooms.filter(room => room.status === 'Available').map(room => (
+                <option key={room.id} value={room.id}>
+                  Room {room.roomNumber} - {room.roomTypeName || room.roomType}
+                </option>
+              ))}
+            </select>
+          </div>
+
+         <div style={{ display: 'flex', gap: '15px' }}>
+            {/* CHECK-IN DATE */}
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Check-In</label>
+              <DatePicker
+                selected={formData.checkInDate ? new Date(formData.checkInDate) : null}
+                onChange={(date) => handleChange({ target: { name: 'checkInDate', value: date } })}
+                excludeDates={disabledDates} 
+                minDate={new Date()}         
+                dateFormat="dd/MM/yyyy"
+                placeholderText="dd/mm/yyyy"
+                className="date-picker-input" 
+                required
+              />
+            </div>
+
+            {/* CHECK-OUT DATE */}
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Check-Out</label>
+              <DatePicker
+                selected={formData.checkOutDate ? new Date(formData.checkOutDate) : null}
+                onChange={(date) => handleChange({ target: { name: 'checkOutDate', value: date } })}
+                excludeDates={disabledDates} 
+                // Prevent checking out BEFORE they check in!
+                minDate={formData.checkInDate ? new Date(formData.checkInDate) : new Date()} 
+                dateFormat="dd/MM/yyyy"
+                placeholderText="dd/mm/yyyy"
+                className="date-picker-input"
+                required
+              />
+            </div>
+          </div>
+
+          {/* 3. GUESTS & WARNINGS */}
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Number of Guests</label>
+            <input type="number" name="guestsCount" min="1" max="10" value={formData.guestsCount} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
+            
+            {isExtraCharge && (
+              <div style={{ marginTop: '10px', padding: '10px', backgroundColor: '#fff3cd', color: '#856404', borderRadius: '4px', borderLeft: '4px solid #ffeeba', fontSize: '14px' }}>
+                <strong>⚠️ Extra Charge Applies:</strong> This room includes {capacity} guests. An additional ₱300 per extra person will be added.
+              </div>
+            )}
+          </div>
+
+          {/* 4. VOUCHER CODE */}
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Discount Voucher (Optional)</label>
+            <input 
+              type="text" 
+              placeholder="e.g., SUMMER20" 
+              value={voucherCode} 
+              onChange={handleVoucherChange} 
+              style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', textTransform: 'uppercase' }} 
+            />
+          </div>
+
+          {/* 5. DYNAMIC PRICE BREAKDOWN */}
+          {selectedRoom && (
+            <div style={{ marginTop: '10px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px', border: '1px solid #e9ecef' }}>
+              <h4 style={{ margin: '0 0 15px 0', color: '#333' }}>Price Breakdown</h4>
+              
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: '#555' }}>
+                <span>Base Room Rate:</span>
+                <span>₱{baseRate.toFixed(2)}</span>
+              </div>
+              
+              {extraChargeTotal > 0 && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: '#d9534f' }}>
+                  <span>Extra Guest Charge ({extraGuestsCount} pax):</span>
+                  <span>+ ₱{extraChargeTotal.toFixed(2)}</span>
+                </div>
+              )}
+
+              {discountAmount > 0 && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: '#28a745' }}>
+                  <span>Voucher Discount ({discountPercent}%):</span>
+                  <span>- ₱{discountAmount.toFixed(2)}</span>
+                </div>
+              )}
+              
+              <hr style={{ borderTop: '1px solid #ddd', margin: '15px 0' }} />
+              
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '20px', fontWeight: 'bold', color: '#212529' }}>
+                <span>Estimated Total:</span>
+                <span>₱{finalPrice.toFixed(2)}</span>
+              </div>
+            </div>
+          )}
+
+          <button type="submit" disabled={isLoading} style={{ marginTop: '10px', padding: '15px', backgroundColor: isLoading ? '#ccc' : '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: isLoading ? 'not-allowed' : 'pointer', fontWeight: 'bold', fontSize: '16px' }}>
+            {isLoading ? 'Processing...' : 'Confirm Reservation'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="vite.config.js">
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+
+  
+})
+</file>
+
+<file path="src/pages/ManageRooms.jsx">
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import RoomMatrix from '../components/RoomMatrix';
+
+export default function ManageRooms() {
+  const [rooms, setRooms] = useState([]);
+  const [formData, setFormData] = useState({ name: '', basePrice: '', capacity: '' });
+  const [statusMessage, setStatusMessage] = useState('');
+  const [newRoomData, setNewRoomData] = useState({
+  roomNumber: '',
+  roomTypeId: ''
+});
+const [activeReservations, setActiveReservations] = useState([]);
+const [physicalRooms, setPhysicalRooms] = useState([]);
+  const [upgradeData, setUpgradeData] = useState({
+    reservationId: '',
+    targetRoomTypeId: ''
+  });
+
+// 2. Add the onChange handler for this specific form
+const handleRoomChange = (e) => {
+  setNewRoomData({ ...newRoomData, [e.target.name]: e.target.value });
+};
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const handleCreatePhysicalRoom = async (e) => {
+    e.preventDefault();
+    try {
+      // 1. Grab the token specifically for this function
+      const token = localStorage.getItem('jwtToken');
+      const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+      // 2. Make the request
+      await axios.post(`${apiUrl}/api/Rooms`, newRoomData, authConfig);
+      
+      alert("Physical room created successfully!");
+      setNewRoomData({ roomNumber: '', roomTypeId: '' }); // Clear the form
+      
+    } catch (error) {
+      console.error("Error creating room:", error);
+      alert("Failed to create room. Check the console.");
+    }
+  };
+
+  // 1. Function to grab the latest rooms
+  const fetchRooms = () => {
+    axios.get(`${apiUrl}/api/RoomTypes`)
+      .then(response => {
+        if (Array.isArray(response.data)) setRooms(response.data);
+        else if (response.data && Array.isArray(response.data.$values)) setRooms(response.data.$values);
+      })
+      .catch(err => console.error("Error fetching rooms:", err));
+  };
+
+  // Run this the moment the page loads
+  useEffect(() => { 
+    fetchRooms(); // Your existing function
+
+    const token = localStorage.getItem('jwtToken');
+    const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+    
+    // 1. Fetch Reservations (Already there)
+    axios.get(`${apiUrl}/api/Reservations`, authConfig)
+      .then(res => {
+        const confirmed = res.data.filter(r => r.status === "Confirmed");
+        setActiveReservations(confirmed);
+      })
+      .catch(err => console.error("Error fetching reservations:", err));
+
+    // 2. NEW: Fetch Physical Rooms so we can look up the real numbers!
+    axios.get(`${apiUrl}/api/Rooms`, authConfig)
+      .then(res => {
+        setPhysicalRooms(res.data.$values || res.data);
+      })
+      .catch(err => console.error("Error fetching physical rooms:", err));
+  }, []);
+  
+  const handleUpgradeSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('jwtToken');
+    const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+    try {
+      // Send the targetRoomTypeId to your upgrade endpoint
+      await axios.patch(`${apiUrl}/api/Reservations/${upgradeData.reservationId}/upgrade`, 
+        { targetRoomTypeId: parseInt(upgradeData.targetRoomTypeId) }, 
+        authConfig
+      );
+      
+      alert("Room upgraded successfully!");
+      window.location.reload(); // Refresh the page to update the lists
+    } catch (error) {
+      console.error("Error upgrading room:", error);
+      alert(error.response?.data?.message || "Failed to upgrade room.");
+    }
+  };
+
+  // 2. Handle typing in the form
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // 3. Submit the new room to the C# backend!
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // 1. Grab the token from LocalStorage!
+    const token = localStorage.getItem('jwtToken');
+    
+    // 2. Create the configuration headers
+    const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+    // 3. Attach authConfig as the THIRD parameter in your axios.post call!
+    axios.post(`${apiUrl}/api/RoomTypes`, formData, authConfig)
+      .then(response => {
+        // ... your existing success logic (e.g., clear form, show success message)
+        alert("Room created successfully!");
+        window.location.reload(); // Refresh to see the new room in the list
+      })
+      .catch(err => {
+        console.error("Error creating room:", err);
+        // ... your existing error logic
+      });
+  };
+
+  return (
+    <div>
+      <h2>Manage Rooms</h2>
+      <RoomMatrix />
+      
+      <div style={{ display: 'flex', gap: '30px', marginTop: '20px' }}>
+        {/* LEFT SIDE: The Creation Form */}
+        <div style={{ flex: 1, backgroundColor: 'white', padding: '20px', borderRadius: '8px', border: '1px solid #ddd', height: 'fit-content' }}>
+          <h3>Create New Room Type</h3>
+          
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Room Name</label>
+              <input type="text" name="name" value={formData.name} onChange={handleInputChange} required style={{ width: '100%', padding: '8px' }} placeholder="e.g. Presidential Suite" />
+            </div>
+            
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Base Price (₱)</label>
+              <input type="number" name="basePrice" value={formData.basePrice} onChange={handleInputChange} required style={{ width: '100%', padding: '8px' }} placeholder="e.g. 1500" />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Capacity (Pax)</label>
+              <input type="number" name="capacity" value={formData.capacity} onChange={handleInputChange} required style={{ width: '100%', padding: '8px' }} placeholder="e.g. 2" />
+            </div>
+
+            <button type="submit" style={{ padding: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+              Save Room
+            </button>
+            
+            {statusMessage && <p style={{ marginTop: '10px', fontSize: '14px', color: '#007bff' }}>{statusMessage}</p>}
+          </form>
+        </div>
+
+        {/* RIGHT SIDE: The Live Room List */}
+       <div style={{ flex: 1, backgroundColor: 'white', padding: '20px', borderRadius: '8px', border: '1px solid #ddd', height: 'fit-content' }}>
+          <h3>Upgrade Customer Room</h3>
+          
+          <form onSubmit={handleUpgradeSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Select Customer Reservation</label>
+              <select 
+                value={upgradeData.reservationId} 
+                onChange={(e) => setUpgradeData({ ...upgradeData, reservationId: e.target.value })} 
+                required 
+                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+              >
+                <option value="">-- Select Reservation --</option>
+                
+                {activeReservations.map(res => {
+                  // 1. Find the matching room in our physicalRooms array
+                  const actualRoom = physicalRooms.find(r => r.id === res.roomId);
+                  // 2. Grab the string roomNumber (or fallback to the ID if it fails)
+                  const displayRoomNumber = actualRoom ? actualRoom.roomNumber : res.roomId;
+
+                  return (
+                    <option key={res.id} value={res.id}>
+                      Reservation #{res.id} (Current Room: {displayRoomNumber})
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Upgrade to Room Type</label>
+              <select 
+                value={upgradeData.targetRoomTypeId} 
+                onChange={(e) => setUpgradeData({ ...upgradeData, targetRoomTypeId: e.target.value })} 
+                required 
+                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+              >
+                <option value="">-- Select New Room Type --</option>
+                {/* 'rooms' here is your existing state holding the Room Types from the left side! */}
+                {rooms.map(type => (
+                  <option key={type.id} value={type.id}>
+                    {type.name} (₱{type.basePrice})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <button type="submit" style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+              Confirm Upgrade
+            </button>
+          </form>
+        </div>
+      </div>
+      {/* --- NEW FORM: Create Physical Room --- */}
+<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', marginTop: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+  <h3 style={{ textAlign: 'center', marginBottom: '20px', color: '#555' }}>Create Physical Room</h3>
+  
+  <form onSubmit={handleCreatePhysicalRoom}>
+    <div style={{ marginBottom: '15px' }}>
+      <label style={{ display: 'block', marginBottom: '5px' }}>Room Number</label>
+      <input 
+        type="text" 
+        name="roomNumber" 
+        value={newRoomData.roomNumber} 
+        onChange={handleRoomChange} 
+        placeholder="e.g. 101" 
+        required 
+        style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+      />
+    </div>
+
+    <div style={{ marginBottom: '20px' }}>
+      <label style={{ display: 'block', marginBottom: '5px' }}>Assign Room Type</label>
+      <select 
+        name="roomTypeId" 
+        value={newRoomData.roomTypeId} 
+        onChange={handleRoomChange} 
+        required
+        style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+      >
+        <option value="">-- Select a Room Type --</option>
+        {/* Loop through your fetched room types to populate the dropdown */}
+        {rooms.map(type => (
+          <option key={type.id} value={type.id}>
+            {type.name} (₱{type.basePrice})
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
+      Add Physical Room
+    </button>
+  </form>
+</div>
+    </div>
+    
+  );
+}
+</file>
+
+<file path="src/App.jsx">
+import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+
+// --- YOUR COMPONENTS ---
+import Login from './pages/Login';
+import Register from './pages/Register';
+import AdminLayout from './components/AdminLayout';
+import CustomerLayout from './components/CustomerLayout';
+// Admin Pages
+import Overview from './pages/Overview';
+import CreateReservation from './pages/CreateReservation';
+import ManageRooms from './pages/ManageRooms';
+import ManageReservations from './pages/ManageReservations';
+import ManagePrices from './pages/ManagePrices';
+import RegisterStaff from './pages/RegisterStaff';
+// Customer Pages
+import CustomerOverview from './pages/CustomerOverview';
+import CustomerReservations from './pages/CustomerReservations';
+import UserProfile from './pages/UserProfile';
+
+
+const ProtectedRoute = ({ children, allowedRoles }) => {
+  const token = localStorage.getItem('jwtToken');
+  const userRole = localStorage.getItem('userRole'); // Make sure your Login page saves this!
+
+  // 1. If they aren't logged in at all, kick to login
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // 2. If the route requires specific roles and the user doesn't have it, kick them out
+  if (allowedRoles && !allowedRoles.includes(userRole)) {
+    // Redirect based on what they actually are
+    if (userRole === 'Customer') return <Navigate to="/customer" replace />;
+    return <Navigate to="/" replace />; // Send staff to admin dashboard
+  }
+
+  // 3. If they pass the checks, let them in!
+  return children;
+};
+
+function AdminRoute({ children }) {
+  const userRole = localStorage.getItem('userRole');
+  if (userRole !== 'Admin') {
+    return <Navigate to="/" />; 
+  }
+  return children;
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* PUBLIC ROUTE */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* ========================================== */}
+        {/* ADMIN & STAFF ROUTES (Wrapped in AdminLayout) */}
+        {/* ========================================== */}
+        <Route 
+          path="/" 
+          element={
+            <ProtectedRoute allowedRoles={['Admin', 'FrontDesk']}>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          {/* These pages inject into the {children} of AdminLayout */}
+          <Route index element={<Overview />} /> 
+          <Route path="book-room" element={<CreateReservation />} />
+          <Route path="rooms" element={<ManageRooms />} />
+          <Route path="reservations" element={<ManageReservations />} />
+      
+          
+          {/* Admin-Only Sub-Routes */}
+          <Route path="prices" element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <ManagePrices />
+            </ProtectedRoute>
+          } />
+          <Route path="staff" element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <RegisterStaff />
+            </ProtectedRoute>
+          } />
+              <Route path="profile" element={<UserProfile />} />
+        </Route>
+
+        {/* ========================================== */}
+        {/* CUSTOMER ROUTES (Wrapped in CustomerLayout) */}
+        {/* ========================================== */}
+        <Route 
+          path="/customer" 
+          element={
+            <ProtectedRoute allowedRoles={['Customer']}>
+              
+              <CustomerLayout />
+            </ProtectedRoute>
+          }
+        >
+          {/* These pages inject into the {children} of CustomerLayout */}
+          <Route index element={<CustomerOverview />} />
+          
+          {/* Note: You can reuse your CreateReservation component here, or make a customer-specific one! */}
+          <Route path="book" element={<CreateReservation />} /> 
+          
+          <Route path="reservations" element={<CustomerReservations />} />
+          <Route path="profile" element={<UserProfile />} />
+        </Route>
+
+        {/* FALLBACK ROUTE: Catch-all for bad URLs */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+        
+        
+      </Routes>
+    </BrowserRouter>
+  );
+}
+</file>
+
+</files>

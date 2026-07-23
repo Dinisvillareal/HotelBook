@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 
+
+
 export default function CustomerLayout() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,6 +35,7 @@ export default function CustomerLayout() {
         <Link to="/customer" style={getLinkStyle('/customer')}>🏨 Browse Rooms</Link>
         <Link to="/customer/book" style={getLinkStyle('/customer/book')}>✍️ Book a Room</Link>
         <Link to="/customer/reservations" style={getLinkStyle('/customer/reservations')}>📅 My Reservations</Link>
+        <Link to="/customer/profile" className="sidebar-link">👤 My Profile</Link>
 
         {/* BOTTOM BUTTON ROW */}
         <div style={{ marginTop: 'auto', display: 'flex', gap: '10px' }}>

@@ -15,6 +15,7 @@ import RegisterStaff from './pages/RegisterStaff';
 // Customer Pages
 import CustomerOverview from './pages/CustomerOverview';
 import CustomerReservations from './pages/CustomerReservations';
+import UserProfile from './pages/UserProfile';
 
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -69,6 +70,7 @@ export default function App() {
           <Route path="book-room" element={<CreateReservation />} />
           <Route path="rooms" element={<ManageRooms />} />
           <Route path="reservations" element={<ManageReservations />} />
+      
           
           {/* Admin-Only Sub-Routes */}
           <Route path="prices" element={
@@ -81,6 +83,7 @@ export default function App() {
               <RegisterStaff />
             </ProtectedRoute>
           } />
+              <Route path="profile" element={<UserProfile />} />
         </Route>
 
         {/* ========================================== */}
@@ -90,6 +93,7 @@ export default function App() {
           path="/customer" 
           element={
             <ProtectedRoute allowedRoles={['Customer']}>
+              
               <CustomerLayout />
             </ProtectedRoute>
           }
@@ -101,10 +105,12 @@ export default function App() {
           <Route path="book" element={<CreateReservation />} /> 
           
           <Route path="reservations" element={<CustomerReservations />} />
+          <Route path="profile" element={<UserProfile />} />
         </Route>
 
         {/* FALLBACK ROUTE: Catch-all for bad URLs */}
         <Route path="*" element={<Navigate to="/login" replace />} />
+        
         
       </Routes>
     </BrowserRouter>

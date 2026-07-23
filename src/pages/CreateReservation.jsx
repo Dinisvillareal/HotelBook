@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
+
 export default function CreateReservation() {
   const [rooms, setRooms] = useState([]);
   const [vouchers, setVouchers] = useState([]);
@@ -13,6 +15,7 @@ export default function CreateReservation() {
     checkOutDate: '',
     guestsCount: 1
   });
+  
   
   const [disabledDates, setDisabledDates] = useState([]);
   // NEW: State to track the voucher code
@@ -45,30 +48,38 @@ export default function CreateReservation() {
     // If no room is selected yet, don't do anything
     if (!formData.roomId) return;
 
-    const fetchRoomReservations = async () => {
+   const fetchRoomReservations = async () => {
       try {
-        // Fetch reservations. (Adjust this URL if you have a specific endpoint for room reservations!)
-        const response = await axios.get(`${apiUrl}/api/Reservations`, authConfig);
+        const response = await axios.get(`${apiUrl}/api/Reservations/booked-dates/${formData.roomId}`, authConfig);
+        const safeData = response.data.$values || response.data;
         
-        // Filter reservations to ONLY the room they selected, and ignore cancelled ones
-        const roomReservations = response.data.filter(
-          res => res.roomId === parseInt(formData.roomId) && res.status !== "Cancelled"
-        );
+        // Add this to your console so you can literally see the dates arriving!
+        console.log("Booked dates from C#:", safeData); 
 
         let datesToBlock = [];
 
-        // Loop through each reservation and grab every day between check-in and check-out
-        roomReservations.forEach(reservation => {
-          let currentDate = new Date(reservation.checkInDate);
-          const endDate = new Date(reservation.checkOutDate);
+        safeData.forEach(reservation => {
+          // Fallback just in case C# capitalized the properties
+          const checkInStr = reservation.checkInDate || reservation.CheckInDate;
+          const checkOutStr = reservation.checkOutDate || reservation.CheckOutDate;
 
-          while (currentDate <= endDate) {
-            datesToBlock.push(new Date(currentDate));
-            currentDate.setDate(currentDate.getDate() + 1); // Move forward one day
+          if (checkInStr && checkOutStr) {
+            // Split the string into Year, Month, Day to bypass timezone shifting
+            const [inYear, inMonth, inDay] = checkInStr.split('-');
+            const [outYear, outMonth, outDay] = checkOutStr.split('-');
+
+            // Create dates locked exactly to local midnight (Note: JS months are 0-indexed!)
+            let currentDate = new Date(inYear, inMonth - 1, inDay);
+            const endDate = new Date(outYear, outMonth - 1, outDay);
+
+            while (currentDate <= endDate) {
+              datesToBlock.push(new Date(currentDate));
+              currentDate.setDate(currentDate.getDate() + 1); // Move forward one day
+            }
           }
         });
-
-        // Save the array of blocked dates to our state
+        
+        console.log("Final locked dates for calendar:", datesToBlock);
         setDisabledDates(datesToBlock);
 
       } catch (error) {
