@@ -4,29 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
-
 export default function CreateReservation() {
   const [rooms, setRooms] = useState([]);
   const [vouchers, setVouchers] = useState([]);
+  
   const [formData, setFormData] = useState({
+    guestName: '', 
     roomId: '',
     checkInDate: '',
     checkOutDate: '',
     guestsCount: 1
   });
   
-  
   const [disabledDates, setDisabledDates] = useState([]);
-  // NEW: State to track the voucher code
   const [voucherCode, setVoucherCode] = useState('');
-  
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL; // Update if your port is different
+  const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem('jwtToken');
+  
+  // NEW: Grab the role to determine what fields to show!
+  const userRole = localStorage.getItem('userRole'); 
   const authConfig = { headers: { Authorization: `Bearer ${token}` } };
 
   useEffect(() => {
@@ -35,51 +35,42 @@ export default function CreateReservation() {
       .then(res => setRooms(res.data))
       .catch(err => console.error("Could not fetch rooms:", err));
 
-    // NEW: Fetch Vouchers
-   axios.get(`${apiUrl}/api/Payments/vouchers`, authConfig)
+    // Fetch Vouchers
+    axios.get(`${apiUrl}/api/Payments/vouchers`, authConfig)
       .then(res => {
-        console.log("VOUCHERS FROM C#:", res.data); // <-- ADD THIS!
         setVouchers(res.data);
       })
       .catch(err => console.error("Could not fetch vouchers:", err));
   }, []);
 
   useEffect(() => {
-    // If no room is selected yet, don't do anything
     if (!formData.roomId) return;
 
-   const fetchRoomReservations = async () => {
+    const fetchRoomReservations = async () => {
       try {
         const response = await axios.get(`${apiUrl}/api/Reservations/booked-dates/${formData.roomId}`, authConfig);
         const safeData = response.data.$values || response.data;
         
-        // Add this to your console so you can literally see the dates arriving!
-        console.log("Booked dates from C#:", safeData); 
-
         let datesToBlock = [];
 
         safeData.forEach(reservation => {
-          // Fallback just in case C# capitalized the properties
           const checkInStr = reservation.checkInDate || reservation.CheckInDate;
           const checkOutStr = reservation.checkOutDate || reservation.CheckOutDate;
 
           if (checkInStr && checkOutStr) {
-            // Split the string into Year, Month, Day to bypass timezone shifting
             const [inYear, inMonth, inDay] = checkInStr.split('-');
             const [outYear, outMonth, outDay] = checkOutStr.split('-');
 
-            // Create dates locked exactly to local midnight (Note: JS months are 0-indexed!)
             let currentDate = new Date(inYear, inMonth - 1, inDay);
             const endDate = new Date(outYear, outMonth - 1, outDay);
 
             while (currentDate <= endDate) {
               datesToBlock.push(new Date(currentDate));
-              currentDate.setDate(currentDate.getDate() + 1); // Move forward one day
+              currentDate.setDate(currentDate.getDate() + 1);
             }
           }
         });
         
-        console.log("Final locked dates for calendar:", datesToBlock);
         setDisabledDates(datesToBlock);
 
       } catch (error) {
@@ -92,7 +83,6 @@ export default function CreateReservation() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    
     
     if (e.target.name === 'roomId') {
       setDisabledDates([]);
@@ -108,14 +98,20 @@ export default function CreateReservation() {
     setIsLoading(true);
     setMessage(null);
 
-    // Note: We are attaching the voucherCode to the payload!
-    // Make sure your C# CreateReservationDto expects this if you want to save it.
     const payload = { ...formData, voucherCode: voucherCode };
 
     axios.post(`${apiUrl}/api/Reservations`, payload, authConfig)
       .then(response => {
         setMessage({ type: 'success', text: 'Reservation booked successfully!' });
-        setTimeout(() => navigate('/reservations'), 2000);
+        
+        // Redirect based on role
+        setTimeout(() => {
+          if (userRole === 'Customer') {
+             navigate('/customer/reservations');
+          } else {
+             navigate('/reservations');
+          }
+        }, 2000);
       })
       .catch(err => {
         setMessage({ type: 'error', text: err.response?.data?.message || 'Failed to book room.' });
@@ -126,28 +122,22 @@ export default function CreateReservation() {
   // --- DYNAMIC MATH ENGINE --- //
   
   const selectedRoom = rooms.find(room => room.id === parseInt(formData.roomId));
-  
-  // Failsafe: Looks for basePrice or pricePerNight just in case C# changed the name!
   const baseRate = selectedRoom ? (selectedRoom.basePrice || selectedRoom.pricePerNight || 0) : 0; 
   const capacity = selectedRoom ? (selectedRoom.capacity || 2) : 2;
 
-  // Extra Guest Math
   const isExtraCharge = selectedRoom && formData.guestsCount > capacity;
   const extraGuestsCount = isExtraCharge ? (formData.guestsCount - capacity) : 0;
-  const extraChargeTotal = extraGuestsCount * 300; // ₱300 per extra person
+  const extraChargeTotal = extraGuestsCount * 300; 
 
- const safeUserInput = voucherCode ? voucherCode.trim().toUpperCase() : '';
+  const safeUserInput = voucherCode ? voucherCode.trim().toUpperCase() : '';
   
   const foundVoucher = vouchers.find(v => {
     const dbCode = v.code || v.Code; 
-    
-
     return dbCode?.trim().toUpperCase() === safeUserInput; 
   });
   
   const discountPercent = foundVoucher ? (foundVoucher.discountPercentage || foundVoucher.DiscountPercentage || 0) : 0;
   
-  // Final Totals
   const subtotal = baseRate + extraChargeTotal;
   const discountAmount = subtotal * (discountPercent / 100);
   const finalPrice = subtotal - discountAmount;
@@ -165,7 +155,23 @@ export default function CreateReservation() {
       <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          {/* 1. ROOM DROPDOWN (Cleaned up!) */}
+          {/* ONLY SHOW THIS FIELD IF THE USER IS NOT A CUSTOMER */}
+          {userRole !== 'Customer' && (
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Guest Name</label>
+              <input 
+                type="text" 
+                name="guestName" 
+                value={formData.guestName} 
+                onChange={handleChange} 
+                required={userRole !== 'Customer'} // Only required for staff
+                placeholder="Enter the full name for the walk-in guest" 
+                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} 
+              />
+            </div>
+          )}
+
+          {/* ROOM DROPDOWN */}
           <div>
             <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Select Room</label>
             <select name="roomId" value={formData.roomId} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}>
@@ -178,7 +184,7 @@ export default function CreateReservation() {
             </select>
           </div>
 
-         <div style={{ display: 'flex', gap: '15px' }}>
+          <div style={{ display: 'flex', gap: '15px' }}>
             {/* CHECK-IN DATE */}
             <div style={{ flex: 1 }}>
               <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Check-In</label>
@@ -201,7 +207,6 @@ export default function CreateReservation() {
                 selected={formData.checkOutDate ? new Date(formData.checkOutDate) : null}
                 onChange={(date) => handleChange({ target: { name: 'checkOutDate', value: date } })}
                 excludeDates={disabledDates} 
-                // Prevent checking out BEFORE they check in!
                 minDate={formData.checkInDate ? new Date(formData.checkInDate) : new Date()} 
                 dateFormat="dd/MM/yyyy"
                 placeholderText="dd/mm/yyyy"
@@ -211,7 +216,7 @@ export default function CreateReservation() {
             </div>
           </div>
 
-          {/* 3. GUESTS & WARNINGS */}
+          {/* GUESTS & WARNINGS */}
           <div>
             <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Number of Guests</label>
             <input type="number" name="guestsCount" min="1" max="10" value={formData.guestsCount} onChange={handleChange} required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} />
@@ -223,7 +228,7 @@ export default function CreateReservation() {
             )}
           </div>
 
-          {/* 4. VOUCHER CODE */}
+          {/* VOUCHER CODE */}
           <div>
             <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#555' }}>Discount Voucher (Optional)</label>
             <input 
@@ -235,7 +240,7 @@ export default function CreateReservation() {
             />
           </div>
 
-          {/* 5. DYNAMIC PRICE BREAKDOWN */}
+          {/* DYNAMIC PRICE BREAKDOWN */}
           {selectedRoom && (
             <div style={{ marginTop: '10px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px', border: '1px solid #e9ecef' }}>
               <h4 style={{ margin: '0 0 15px 0', color: '#333' }}>Price Breakdown</h4>

@@ -20,6 +20,9 @@ export default function ManageReservations() {
   const [bookingFilter, setBookingFilter] = useState('All');
   const [paymentFilter, setPaymentFilter] = useState('All');
   
+  // NEW: SEARCH BAR STATE
+  const [searchQuery, setSearchQuery] = useState('');
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -79,11 +82,27 @@ export default function ManageReservations() {
       });
   };
 
-  // FILTER LOGIC MATCHING BOTH DROPDOWNS
+  // FILTER LOGIC MATCHING DROPDOWNS AND SEARCH BAR
   const filteredReservations = reservations.filter(res => {
+    // 1. Dropdown matching
     const matchesBooking = bookingFilter === 'All' || res.status === bookingFilter;
     const matchesPayment = paymentFilter === 'All' || (res.paymentStatus || 'Pending') === paymentFilter;
-    return matchesBooking && matchesPayment;
+    
+    // 2. Search matching (safely check guestName and ID)
+    const safeGuestName = res.guestName ? res.guestName.toLowerCase() : '';
+    const safeId = res.id ? res.id.toString() : '';
+    const searchLower = searchQuery.toLowerCase();
+    
+    const matchesSearch = searchQuery === '' || 
+                          safeGuestName.includes(searchLower) || 
+                          safeId.includes(searchLower);
+
+    // It only shows up if it matches ALL conditions!
+    return matchesBooking && matchesPayment && matchesSearch;
+    
+ }).sort((a, b) => {
+    // Sort by Newest Created (Highest ID first)
+    return b.id - a.id;
   });
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -97,9 +116,24 @@ export default function ManageReservations() {
       
       {error && <p style={{ color: 'red' }}>{error}</p>}
       
-      {/* SEPARATE FILTER DROPDOWNS */}
+      {/* SEPARATE FILTER DROPDOWNS & SEARCH */}
       <div style={{ marginBottom: '20px', display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
         
+        {/* NEW: Search Bar */}
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <strong>Search:</strong>
+          <input 
+            type="text"
+            placeholder="Search Name or ID..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // Jump back to page 1 while typing!
+            }}
+            style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', minWidth: '200px' }}
+          />
+        </div>
+
         {/* Booking Status Dropdown */}
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <strong>Booking Status:</strong>

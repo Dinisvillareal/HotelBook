@@ -1,13 +1,23 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaBed, FaCalendarCheck, FaUsers, FaMoneyBillWave, FaClock } from 'react-icons/fa';
+
+// Helper to make dates look nice
+const formatBeautifulDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
 
 export default function Overview() {
-  // 1. Set up our state to hold the calculated numbers
   const [stats, setStats] = useState({
     totalBookings: 0,
     activeGuests: 0,
     availableRooms: 0,
     totalRevenue: 0,
+    occupancyRate: 0,
+    pendingBookings: 0,
+    todaysArrivals: [],
     isLoading: true
   });
 
@@ -18,53 +28,54 @@ export default function Overview() {
   useEffect(() => {
     const fetchDashboardStats = async () => {
       try {
-        // 2. Fetch both Rooms and Reservations simultaneously for speed!
         const [resResponse, roomsResponse] = await Promise.all([
           axios.get(`${apiUrl}/api/Reservations`, authConfig),
           axios.get(`${apiUrl}/api/Rooms`, authConfig)
         ]);
 
-        // Safety check for Dapper/C# serialization formatting
         const reservations = resResponse.data.$values || resResponse.data;
         const rooms = roomsResponse.data.$values || roomsResponse.data;
 
-        // Get exactly midnight today to accurately calculate who is in the hotel right now
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
         // --- MATH & CALCULATIONS ---
-        
-        // A. Total Confirmed Bookings (Ignore cancelled ones)
         const confirmedReservations = reservations.filter(r => r.status === "Confirmed");
+        const pendingCount = reservations.filter(r => r.status === "Pending" || r.paymentStatus === "Pending").length;
         
-        // B. Total Revenue (Sum up the price of every confirmed booking)
         const revenue = confirmedReservations.reduce((sum, r) => sum + r.totalPrice, 0);
 
-        // C. Find out who is physically in the hotel TODAY
         const currentlyOccupied = confirmedReservations.filter(r => {
             const checkIn = new Date(r.checkInDate);
             const checkOut = new Date(r.checkOutDate);
             checkIn.setHours(0,0,0,0);
             checkOut.setHours(0,0,0,0);
-            
-            // They are here if today is on or after check-in, and strictly before check-out
             return today >= checkIn && today < checkOut;
         });
 
-        // D. Count total guests sleeping in the hotel tonight
-        const activeGuests = currentlyOccupied.reduce((sum, r) => sum + r.guestsCount, 0);
+        // Who is arriving specifically today?
+        const arrivalsToday = confirmedReservations.filter(r => {
+            const checkIn = new Date(r.checkInDate);
+            checkIn.setHours(0,0,0,0);
+            return checkIn.getTime() === today.getTime();
+        });
 
-        // E. Calculate Available Rooms (Total physical rooms minus the ones occupied today)
+        const activeGuests = currentlyOccupied.reduce((sum, r) => sum + r.guestsCount, 0);
         const totalPhysicalRooms = rooms.length;
         const occupiedRoomsToday = currentlyOccupied.length;
         const availableRooms = totalPhysicalRooms - occupiedRoomsToday;
+        
+        // Calculate Occupancy Percentage
+        const occupancy = totalPhysicalRooms > 0 ? Math.round((occupiedRoomsToday / totalPhysicalRooms) * 100) : 0;
 
-        // 3. Save it all to state to trigger the UI render
         setStats({
           totalBookings: confirmedReservations.length,
           activeGuests: activeGuests,
           availableRooms: availableRooms,
           totalRevenue: revenue,
+          occupancyRate: occupancy,
+          pendingBookings: pendingCount,
+          todaysArrivals: arrivalsToday,
           isLoading: false
         });
 
@@ -78,62 +89,123 @@ export default function Overview() {
   }, []);
 
   if (stats.isLoading) {
-    return <p style={{ padding: '20px', fontSize: '18px', color: '#666' }}>Calculating dashboard statistics...</p>;
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '50px', color: '#666' }}>
+        <h2>Loading Live Data...</h2>
+      </div>
+    );
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2 style={{ marginBottom: '20px', color: '#333' }}>Live Hotel Statistics</h2>
+    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h2 style={{ color: '#333', margin: 0 }}>Dashboard Overview</h2>
+        {stats.pendingBookings > 0 && (
+          <span style={{ padding: '8px 15px', backgroundColor: '#fff3cd', color: '#856404', borderRadius: '20px', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <FaClock /> {stats.pendingBookings} Pending Action(s) Required
+          </span>
+        )}
+      </div>
       
-      {/* CSS Grid creates a responsive row of 4 equally-sized cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+      {/* --- TOP ROW: STAT CARDS --- */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '30px' }}>
         
-        {/* Card 1: Available Rooms */}
-        <div style={cardStyle}>
-          <h3 style={titleStyle}>🟢 Available Rooms</h3>
+        {/* Available Rooms */}
+        <div style={{ ...cardStyle, borderTopColor: '#28a745' }}>
+          <div style={iconStyle('#d4edda', '#28a745')}><FaBed /></div>
+          <h3 style={titleStyle}>Available Rooms</h3>
           <p style={numberStyle}>{stats.availableRooms}</p>
-          <span style={subtextStyle}>Ready for walk-ins today</span>
+          <span style={subtextStyle}>{stats.occupancyRate}% Hotel Occupancy</span>
         </div>
 
-        {/* Card 2: Active Bookings */}
-        <div style={cardStyle}>
-          <h3 style={titleStyle}>📅 Total Bookings</h3>
+        {/* Total Bookings */}
+        <div style={{ ...cardStyle, borderTopColor: '#007bff' }}>
+          <div style={iconStyle('#cce5ff', '#007bff')}><FaCalendarCheck /></div>
+          <h3 style={titleStyle}>Confirmed Bookings</h3>
           <p style={numberStyle}>{stats.totalBookings}</p>
           <span style={subtextStyle}>Upcoming & ongoing</span>
         </div>
 
-        {/* Card 3: Guests Today */}
-        <div style={cardStyle}>
-          <h3 style={titleStyle}>👥 Guests Today</h3>
+        {/* Guests Today */}
+        <div style={{ ...cardStyle, borderTopColor: '#17a2b8' }}>
+          <div style={iconStyle('#d1ecf1', '#17a2b8')}><FaUsers /></div>
+          <h3 style={titleStyle}>Guests Today</h3>
           <p style={numberStyle}>{stats.activeGuests}</p>
           <span style={subtextStyle}>Checked-in right now</span>
         </div>
 
-        {/* Card 4: Total Revenue */}
-        <div style={cardStyle}>
-          <h3 style={titleStyle}>💰 Total Revenue</h3>
-          {/* Format the number to look like real Philippine Pesos with commas and 2 decimals! */}
+        {/* Revenue */}
+        <div style={{ ...cardStyle, borderTopColor: '#ffc107' }}>
+          <div style={iconStyle('#fff3cd', '#ffc107')}><FaMoneyBillWave /></div>
+          <h3 style={titleStyle}>Total Revenue</h3>
           <p style={numberStyle}>₱{stats.totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
-          <span style={subtextStyle}>From all confirmed bookings</span>
+          <span style={subtextStyle}>From confirmed bookings</span>
         </div>
-
       </div>
+
+      {/* --- BOTTOM ROW: QUICK VIEWS --- */}
+      <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', border: '1px solid #eee' }}>
+        <h3 style={{ marginTop: 0, color: '#333', borderBottom: '2px solid #f4f6f8', paddingBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <FaCalendarCheck color="#007bff" /> Today's Arrivals
+        </h3>
+        
+        {stats.todaysArrivals.length === 0 ? (
+          <p style={{ color: '#888', fontStyle: 'italic', padding: '10px 0' }}>No new guests checking in today.</p>
+        ) : (
+          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#f8f9fa', textAlign: 'left', color: '#555', fontSize: '14px' }}>
+                <th style={{ padding: '12px' }}>Guest Name</th>
+                <th style={{ padding: '12px' }}>Room</th>
+                <th style={{ padding: '12px' }}>Pax</th>
+                <th style={{ padding: '12px' }}>Check-Out</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stats.todaysArrivals.map(res => (
+                <tr key={res.id} style={{ borderBottom: '1px solid #eee' }}>
+                  <td style={{ padding: '12px', fontWeight: 'bold', color: '#333' }}>{res.guestName}</td>
+                  <td style={{ padding: '12px' }}>Room #{res.roomNumber || res.roomId}</td>
+                  <td style={{ padding: '12px' }}>{res.guestsCount}</td>
+                  <td style={{ padding: '12px' }}>{formatBeautifulDate(res.checkOutDate)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
     </div>
   );
 }
 
 // --- INLINE STYLES ---
-// Using inline objects keeps the component self-contained without needing an external CSS file!
-
 const cardStyle = {
   backgroundColor: 'white',
-  padding: '20px 15px',
-  borderRadius: '8px',
-  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  padding: '25px 20px',
+  borderRadius: '12px',
+  boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
   textAlign: 'center',
-  borderTop: '4px solid #007bff' // A nice blue accent line at the top
+  borderTop: '5px solid', 
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
 };
 
-const titleStyle = { margin: '0 0 10px 0', fontSize: '16px', color: '#555' };
-const numberStyle = { margin: '0', fontSize: '36px', fontWeight: 'bold', color: '#333' };
-const subtextStyle = { fontSize: '12px', color: '#888' };
+const iconStyle = (bgColor, color) => ({
+  width: '50px',
+  height: '50px',
+  borderRadius: '50%',
+  backgroundColor: bgColor,
+  color: color,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '24px',
+  marginBottom: '15px'
+});
+
+const titleStyle = { margin: '0 0 10px 0', fontSize: '15px', color: '#6c757d', textTransform: 'uppercase', letterSpacing: '0.5px' };
+const numberStyle = { margin: '0 0 5px 0', fontSize: '32px', fontWeight: '800', color: '#343a40' };
+const subtextStyle = { fontSize: '13px', color: '#adb5bd', fontWeight: '500' };
