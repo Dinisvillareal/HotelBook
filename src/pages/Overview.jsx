@@ -58,7 +58,7 @@ export default function Overview() {
   });
 
   const apiUrl = import.meta.env.VITE_API_URL;
-  const token = localStorage.getItem('jwtToken');
+  const token = sessionStorage.getItem('jwtToken');
   const authConfig = { headers: { Authorization: `Bearer ${token}` } };
 
   // Get today's formatted date for the header
@@ -66,16 +66,27 @@ export default function Overview() {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  useEffect(() => {
+ useEffect(() => {
     const fetchDashboardStats = async () => {
       try {
-        const [resResponse, roomsResponse] = await Promise.all([
-          axios.get(`${apiUrl}/api/Reservations`, authConfig),
-          axios.get(`${apiUrl}/api/Rooms`, authConfig)
+        const token = sessionStorage.getItem('jwtToken');
+      
+        // Safety check: If there is no token, don't even try to fetch
+        if (!token) {
+          console.warn("No token found. User might not be logged in.");
+          return; 
+        }
+
+        const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+        const [roomsRes, reservationsRes] = await Promise.all([
+          axios.get(`${apiUrl}/api/Rooms`, authConfig),
+          axios.get(`${apiUrl}/api/Reservations`, authConfig)
         ]);
 
-        const reservations = resResponse.data.$values || resResponse.data;
-        const rooms = roomsResponse.data.$values || roomsResponse.data;
+        // FIX: We changed these to exactly match the variable names from above!
+        const reservations = reservationsRes.data.$values || reservationsRes.data;
+        const rooms = roomsRes.data.$values || roomsRes.data;
 
         const today = new Date();
         today.setHours(0, 0, 0, 0);

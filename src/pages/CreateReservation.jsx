@@ -164,7 +164,7 @@ export default function CreateReservation() {
       const year = d.getFullYear();
       const month = String(d.getMonth() + 1).padStart(2, '0');
       const day = String(d.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`; 
+      return `${year}-${month}-${day}`;
     };
 
     // Apply the formatting to the payload BEFORE sending it to the database
@@ -172,7 +172,8 @@ export default function CreateReservation() {
       ...formData, 
       checkInDate: formatLocalString(formData.checkInDate),
       checkOutDate: formatLocalString(formData.checkOutDate),
-      voucherCode: voucherCode 
+      voucherCode: voucherCode,
+      totalPrice: finalPrice 
     };
 
     axios.post(`${apiUrl}/api/Reservations`, payload, authConfig)
@@ -202,7 +203,6 @@ export default function CreateReservation() {
   const extraChargeTotal = extraGuestsCount * 300;
 
   const safeUserInput = voucherCode ? voucherCode.trim().toUpperCase() : '';
-
   const foundVoucher = vouchers.find(v => {
     const dbCode = v.code || v.Code;
     return dbCode?.trim().toUpperCase() === safeUserInput;
@@ -213,7 +213,6 @@ export default function CreateReservation() {
   const subtotal = baseRate + extraChargeTotal;
   const discountAmount = subtotal * (discountPercent / 100);
   const finalPrice = subtotal - discountAmount;
-
   return (
     <div className="hb-page" style={{ padding: '40px 20px', maxWidth: '700px', margin: '0 auto', fontFamily: "'Inter', sans-serif" }}>
       <style>{globalStyles}</style>
