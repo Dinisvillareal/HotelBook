@@ -123,7 +123,7 @@ export default function ManageReservations() {
   const itemsPerPage = 7;
 
   const apiUrl = import.meta.env.VITE_API_URL;
-  const token = localStorage.getItem('jwtToken');
+  const token = sessionStorage.getItem('jwtToken');
   const authConfig = { headers: { Authorization: `Bearer ${token}` } };
 
   const fetchReservations = () => {

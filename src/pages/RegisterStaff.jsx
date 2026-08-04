@@ -76,7 +76,7 @@ export default function RegisterStaff() {
   const [isLoading, setIsLoading] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
-  const token = localStorage.getItem('jwtToken');
+  const token = sessionStorage.getItem('jwtToken');
 
   // Attach the token so the backend knows an Admin is making this request!
   const authConfig = { headers: { Authorization: `Bearer ${token}` } };

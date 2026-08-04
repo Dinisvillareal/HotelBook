@@ -104,8 +104,8 @@ export default function CustomerLayout() {
     `hb-navlink${location.pathname === path ? ' hb-navlink-active' : ''}`;
 
   const handleLogout = () => {
-    localStorage.removeItem('jwtToken');
-    localStorage.removeItem('userRole');
+    sessionStorage.removeItem('jwtToken');
+    sessionStorage.removeItem('userRole');
     navigate('/login');
   };
 

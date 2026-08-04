@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 
 // --- YOUR COMPONENTS ---
+import LandingPage from './pages/LandingPage'; // <-- 1. ADD THIS IMPORT
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminLayout from './components/AdminLayout';
@@ -17,62 +18,41 @@ import CustomerOverview from './pages/CustomerOverview';
 import CustomerReservations from './pages/CustomerReservations';
 import UserProfile from './pages/UserProfile';
 
-
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const token = localStorage.getItem('jwtToken');
-  const userRole = localStorage.getItem('userRole'); // Make sure your Login page saves this!
+  const token = sessionStorage.getItem('jwtToken');
+  const userRole = sessionStorage.getItem('userRole'); 
 
-  // 1. If they aren't logged in at all, kick to login
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
-  // 2. If the route requires specific roles and the user doesn't have it, kick them out
   if (allowedRoles && !allowedRoles.includes(userRole)) {
-    // Redirect based on what they actually are
     if (userRole === 'Customer') return <Navigate to="/customer" replace />;
-    return <Navigate to="/" replace />; // Send staff to admin dashboard
+    return <Navigate to="/admin" replace />; // <-- Make sure this points to /admin!
   }
 
-  // 3. If they pass the checks, let them in!
   return children;
 };
-
-function AdminRoute({ children }) {
-  const userRole = localStorage.getItem('userRole');
-  if (userRole !== 'Admin') {
-    return <Navigate to="/" />; 
-  }
-  return children;
-}
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* PUBLIC ROUTE */}
+        {/* PUBLIC ROUTES */}
+        {/* 2. ADD THE LANDING PAGE ROUTE HERE */}
+        <Route path="/" element={<LandingPage />} /> 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         {/* ========================================== */}
-        {/* ADMIN & STAFF ROUTES (Wrapped in AdminLayout) */}
+        {/* ADMIN & STAFF ROUTES */}
         {/* ========================================== */}
-        <Route 
-          path="/" 
-          element={
-            <ProtectedRoute allowedRoles={['Admin', 'FrontDesk']}>
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
-          {/* These pages inject into the {children} of AdminLayout */}
+        <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Overview />} /> 
           <Route path="book-room" element={<CreateReservation />} />
           <Route path="rooms" element={<ManageRooms />} />
           <Route path="reservations" element={<ManageReservations />} />
-      
           
-          {/* Admin-Only Sub-Routes */}
           <Route path="prices" element={
             <ProtectedRoute allowedRoles={['Admin']}>
               <ManagePrices />
@@ -83,34 +63,29 @@ export default function App() {
               <RegisterStaff />
             </ProtectedRoute>
           } />
-              <Route path="profile" element={<UserProfile />} />
+          <Route path="profile" element={<UserProfile />} />
         </Route>
 
         {/* ========================================== */}
-        {/* CUSTOMER ROUTES (Wrapped in CustomerLayout) */}
+        {/* CUSTOMER ROUTES */}
         {/* ========================================== */}
         <Route 
           path="/customer" 
           element={
             <ProtectedRoute allowedRoles={['Customer']}>
-              
               <CustomerLayout />
             </ProtectedRoute>
           }
         >
-          {/* These pages inject into the {children} of CustomerLayout */}
           <Route index element={<CustomerOverview />} />
-          
-          {/* Note: You can reuse your CreateReservation component here, or make a customer-specific one! */}
           <Route path="book" element={<CreateReservation />} /> 
-          
           <Route path="reservations" element={<CustomerReservations />} />
           <Route path="profile" element={<UserProfile />} />
         </Route>
 
         {/* FALLBACK ROUTE: Catch-all for bad URLs */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-        
+        {/* 3. Change the fallback to redirect to the landing page instead of login */}
+        <Route path="*" element={<Navigate to="/" replace />} />
         
       </Routes>
     </BrowserRouter>

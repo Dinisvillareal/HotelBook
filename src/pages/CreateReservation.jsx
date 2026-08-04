@@ -70,9 +70,9 @@ export default function CreateReservation() {
 
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
-  const token = localStorage.getItem('jwtToken');
+  const token = sessionStorage.getItem('jwtToken');
 
-  const userRole = localStorage.getItem('userRole');
+  const userRole = sessionStorage.getItem('userRole');
   const authConfig = { headers: { Authorization: `Bearer ${token}` } };
 
   useEffect(() => {
@@ -152,12 +152,28 @@ export default function CreateReservation() {
     setVoucherCode(e.target.value.toUpperCase());
   };
 
-  const handleSubmit = (e) => {
+ const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage(null);
 
-    const payload = { ...formData, voucherCode: voucherCode };
+    // Helper function to force the date into a local YYYY-MM-DD string
+    const formatLocalString = (dateObj) => {
+      if (!dateObj) return '';
+      const d = new Date(dateObj);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`; 
+    };
+
+    // Apply the formatting to the payload BEFORE sending it to the database
+    const payload = { 
+      ...formData, 
+      checkInDate: formatLocalString(formData.checkInDate),
+      checkOutDate: formatLocalString(formData.checkOutDate),
+      voucherCode: voucherCode 
+    };
 
     axios.post(`${apiUrl}/api/Reservations`, payload, authConfig)
       .then(response => {
@@ -167,7 +183,7 @@ export default function CreateReservation() {
           if (userRole === 'Customer') {
              navigate('/customer/reservations');
           } else {
-             navigate('/reservations');
+             navigate('/admin/reservations');
           }
         }, 2000);
       })
@@ -238,7 +254,9 @@ export default function CreateReservation() {
             <label style={labelStyle}><FaBed color={COLORS.muted} /> Select Room</label>
             <select name="roomId" value={formData.roomId} onChange={handleChange} required className="hb-select" style={inputStyle}>
               <option value="" disabled>-- Choose a Room --</option>
-              {rooms.filter(room => room.status === 'Available').map(room => (
+              {/* We remove the 'Available' filter so rooms can be booked for future dates! */}
+              {/* Optional: You can filter out 'Maintenance' if your backend uses that status */}
+              {rooms.filter(room => room.status !== 'Maintenance').map(room => (
                 <option key={room.id} value={room.id}>
                   Room {room.roomNumber} - {room.roomTypeName || room.roomType} (₱{room.basePrice || room.pricePerNight})
                 </option>

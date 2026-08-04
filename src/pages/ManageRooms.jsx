@@ -57,8 +57,13 @@ export default function ManageRooms() {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const fetchRooms = () => {
-    axios.get(`${apiUrl}/api/RoomTypes`)
+ const fetchRooms = () => {
+    // 1. Grab the token inside the function
+    const token = sessionStorage.getItem('jwtToken');
+    const authConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+    // 2. Attach authConfig to the request!
+    axios.get(`${apiUrl}/api/RoomTypes`, authConfig)
       .then(response => {
         if (Array.isArray(response.data)) setRooms(response.data);
         else if (response.data && Array.isArray(response.data.$values)) setRooms(response.data.$values);
@@ -68,7 +73,7 @@ export default function ManageRooms() {
 
   useEffect(() => {
     fetchRooms();
-    const token = localStorage.getItem('jwtToken');
+    const token = sessionStorage.getItem('jwtToken');
     const authConfig = { headers: { Authorization: `Bearer ${token}` } };
 
     axios.get(`${apiUrl}/api/Reservations`, authConfig)
@@ -89,7 +94,7 @@ export default function ManageRooms() {
   const handleCreatePhysicalRoom = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('jwtToken');
+      const token = sessionStorage.getItem('jwtToken');
       await axios.post(`${apiUrl}/api/Rooms`, newRoomData, { headers: { Authorization: `Bearer ${token}` } });
       alert("Physical room created successfully!");
       setNewRoomData({ roomNumber: '', roomTypeId: '' });
@@ -101,7 +106,7 @@ export default function ManageRooms() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('jwtToken');
+    const token = sessionStorage.getItem('jwtToken');
     axios.post(`${apiUrl}/api/RoomTypes`, formData, { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         alert("Room created successfully!");
@@ -154,7 +159,7 @@ export default function ManageRooms() {
       return;
     }
 
-    const token = localStorage.getItem('jwtToken');
+    const token = sessionStorage.getItem('jwtToken');
     const authConfig = { headers: { Authorization: `Bearer ${token}` } };
 
     try {

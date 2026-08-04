@@ -153,7 +153,7 @@ export default function Login() {
     axios.post(`${apiUrl}/api/Auth/login`, credentials)
       .then(response => {
         const token = response.data.token || response.data;
-        localStorage.setItem('jwtToken', token);
+        sessionStorage.setItem('jwtToken', token);
 
         let finalRole = 'Customer';
         try {
@@ -164,8 +164,16 @@ export default function Login() {
           console.error("Could not decode token", e);
         }
 
-        localStorage.setItem('userRole', finalRole);
-        navigate(finalRole === 'Customer' ? '/customer' : '/');
+        // 2. Save it to session storage exactly ONCE
+        sessionStorage.setItem('userRole', finalRole);
+
+        // 3. Traffic cop redirect using the role we just decoded!
+        if (finalRole === 'Customer') {
+          navigate('/customer');
+        } else {
+          // FIX: Send Admin and FrontDesk to /admin instead of /
+          navigate('/admin'); 
+        }        
       })
       .catch(err => {
         console.error("Login error:", err);

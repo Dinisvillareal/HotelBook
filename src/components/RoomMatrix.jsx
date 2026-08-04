@@ -113,7 +113,7 @@ export default function RoomMatrix() {
   today.setHours(0, 0, 0, 0);
 
   const apiUrl = import.meta.env.VITE_API_URL;
-  const token = localStorage.getItem('jwtToken');
+  const token = sessionStorage.getItem('jwtToken');
   const authConfig = { headers: { Authorization: `Bearer ${token}` } };
 
   useEffect(() => {

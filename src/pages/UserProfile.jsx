@@ -73,8 +73,8 @@ export default function UserProfile() {
 
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
-  const token = localStorage.getItem('jwtToken');
-  const userRole = localStorage.getItem('userRole') || 'Customer';
+  const token = sessionStorage.getItem('jwtToken');
+  const userRole = sessionStorage.getItem('userRole') || 'Customer';
   const authConfig = { headers: { Authorization: `Bearer ${token}` } };
 
   useEffect(() => {
@@ -93,8 +93,8 @@ export default function UserProfile() {
       .then(() => {
         setMessage({ type: 'success', text: 'Profile updated successfully! Please log in again.' });
         setTimeout(() => {
-          localStorage.removeItem('jwtToken');
-          localStorage.removeItem('userRole');
+          sessionStorage.removeItem('jwtToken');
+          sessionStorage.removeItem('userRole');
           navigate('/login');
         }, 2000);
       })
