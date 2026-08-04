@@ -54,6 +54,10 @@ const globalStyles = `
   .hb-hamburger { display: none; }
   .hb-hamburger:focus-visible { outline: 2px solid ${COLORS.emerald}; outline-offset: 2px; }
 
+  .hb-logo-link { text-decoration: none; transition: opacity 0.15s ease; }
+  .hb-logo-link:hover { opacity: 0.8; }
+  .hb-logo-link:focus-visible { outline: 2px solid ${COLORS.emerald}; outline-offset: 3px; border-radius: 6px; }
+
   @media (max-width: 900px) {
     .hb-topbar { display: flex !important; }
     .hb-hamburger { display: inline-flex !important; }
@@ -130,10 +134,12 @@ export default function CustomerLayout() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{ width: '30px', height: '30px', backgroundColor: COLORS.emerald, borderRadius: '7px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: COLORS.ivory }}>
-            <FaHotel size={15} />
-          </div>
-          <span style={{ fontFamily: "'Fraunces', serif", fontSize: '17px', fontWeight: 700, color: COLORS.ink }}>My HotelBook</span>
+          <Link to="/" className="hb-logo-link" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: '30px', height: '30px', backgroundColor: COLORS.emerald, borderRadius: '7px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: COLORS.ivory }}>
+              <FaHotel size={15} />
+            </div>
+            <span style={{ fontFamily: "'Fraunces', serif", fontSize: '17px', fontWeight: 700, color: COLORS.ink }}>My HotelBook</span>
+          </Link>
         </div>
         <button
           className="hb-hamburger"
@@ -172,14 +178,14 @@ export default function CustomerLayout() {
       >
         {/* LOGO AREA */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px', paddingLeft: '5px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Link to="/" className="hb-logo-link" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ width: '35px', height: '35px', backgroundColor: COLORS.emerald, borderRadius: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: COLORS.ivory }}>
               <FaHotel size={18} />
             </div>
             <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: '20px', margin: 0, color: COLORS.ink, fontWeight: 700, letterSpacing: '-0.3px' }}>
               My HotelBook
             </h1>
-          </div>
+          </Link>
           <button
             className="hb-close"
             onClick={() => setMenuOpen(false)}
