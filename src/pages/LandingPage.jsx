@@ -136,9 +136,9 @@ const FALLBACK_ROOMS = [
 ];
 
 const TESTIMONIALS = [
-  { quote: 'It felt less like a hotel and more like someone had handed me the keys to their favourite room.', name: 'Marisol A.', place: 'Cebu, PH' },
-  { quote: 'Booking took two minutes and the concierge remembered my name at check-in. Small hotel, big attention.', name: 'Devon R.', place: 'Singapore' },
-  { quote: 'The rate guarantee was real — found the same room cheaper here than anywhere else I checked.', name: 'Priya K.', place: 'Manila, PH' },
+  { quote: 'It felt less like a hotel and more like someone had handed me the keys to their favourite room.', name: 'Villareal Jr.', place: 'Dumaguete, PH' },
+  { quote: 'Booking took two minutes and the concierge remembered my name at check-in. Small hotel, big attention.', name: 'Dinis', place: 'Dumaguete, PH' },
+  { quote: 'The rate guarantee was real — found the same room cheaper here than anywhere else I checked.', name: 'LEE', place: 'Dipolog, PH' },
 ];
 
 export default function LandingPage() {
