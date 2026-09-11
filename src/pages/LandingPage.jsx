@@ -147,6 +147,9 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  const token = sessionStorage.getItem('jwtToken');
+  const userRole = sessionStorage.getItem('userRole') || 'Customer';
+
   useEffect(() => {
     if (!apiUrl) return;
     axios.get(`${apiUrl}/api/RoomTypes`)
@@ -176,10 +179,18 @@ export default function LandingPage() {
           </nav>
 
           <div className="hb-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
-            <Link to="/login" className="hb-link" style={{ color: COLORS.ink, textDecoration: 'none', fontSize: '14.5px', fontWeight: 600 }}>Sign in</Link>
-            <Link to="/register" style={{ padding: '10px 20px', backgroundColor: COLORS.emerald, color: COLORS.ivory, borderRadius: '8px', textDecoration: 'none', fontWeight: 700, fontSize: '14px' }}>
-              Get Your Key
-            </Link>
+            {token ? (
+              <Link to={userRole === 'Customer' ? '/customer' : '/admin'} style={{ padding: '10px 20px', backgroundColor: COLORS.emerald, color: COLORS.ivory, borderRadius: '8px', textDecoration: 'none', fontWeight: 700, fontSize: '14px' }}>
+                Go to Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link to="/login" className="hb-link" style={{ color: COLORS.ink, textDecoration: 'none', fontSize: '14.5px', fontWeight: 600 }}>Sign in</Link>
+                <Link to="/register" style={{ padding: '10px 20px', backgroundColor: COLORS.emerald, color: COLORS.ivory, borderRadius: '8px', textDecoration: 'none', fontWeight: 700, fontSize: '14px' }}>
+                  Get Your Key
+                </Link>
+              </>
+            )}
           </div>
 
           <button
@@ -197,10 +208,19 @@ export default function LandingPage() {
             <a href="#rooms" onClick={() => setMobileOpen(false)} style={{ color: COLORS.ink, textDecoration: 'none', fontWeight: 600 }}>Rooms</a>
             <a href="#why" onClick={() => setMobileOpen(false)} style={{ color: COLORS.ink, textDecoration: 'none', fontWeight: 600 }}>Why HotelBook</a>
             <a href="#stories" onClick={() => setMobileOpen(false)} style={{ color: COLORS.ink, textDecoration: 'none', fontWeight: 600 }}>Guest Stories</a>
-            <Link to="/login" style={{ color: COLORS.ink, textDecoration: 'none', fontWeight: 600 }}>Sign in</Link>
-            <Link to="/register" style={{ padding: '12px', backgroundColor: COLORS.emerald, color: COLORS.ivory, borderRadius: '8px', textDecoration: 'none', fontWeight: 700, textAlign: 'center' }}>
-              Get Your Key
-            </Link>
+            
+            {token ? (
+              <Link to={userRole === 'Customer' ? '/customer' : '/admin'} style={{ padding: '12px', backgroundColor: COLORS.emerald, color: COLORS.ivory, borderRadius: '8px', textDecoration: 'none', fontWeight: 700, textAlign: 'center' }}>
+                Go to Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link to="/login" style={{ color: COLORS.ink, textDecoration: 'none', fontWeight: 600 }}>Sign in</Link>
+                <Link to="/register" style={{ padding: '12px', backgroundColor: COLORS.emerald, color: COLORS.ivory, borderRadius: '8px', textDecoration: 'none', fontWeight: 700, textAlign: 'center' }}>
+                  Get Your Key
+                </Link>
+              </>
+            )}
           </div>
         )}
       </header>
