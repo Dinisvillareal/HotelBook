@@ -10,6 +10,8 @@ import {
   FaCheckCircle,
   FaClock,
   FaTimesCircle,
+  FaTimes,
+  FaExclamationTriangle
 } from 'react-icons/fa';
 
 // ---- Design tokens (matches Login/Register/AdminLayout/Overview/ManageReservations) ----
@@ -81,6 +83,24 @@ export default function CustomerReservations() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  const [confirmDialog, setConfirmDialog] = useState(null);
+
+  const handleCancelReservation = (id) => {
+    setConfirmDialog({
+      title: 'Cancel Reservation',
+      message: 'Are you sure you want to cancel this reservation? This action cannot be undone.',
+      onConfirm: () => {
+        axios.delete(`${apiUrl}/api/Reservations/${id}`, authConfig)
+          .then(() => {
+            // Update the UI instantly without needing a full page refresh
+            setReservations(prev => prev.map(r => r.id === id ? { ...r, status: 'Cancelled' } : r));
+          })
+          .catch(err => alert(err.response?.data?.message || 'Could not cancel reservation.'))
+          .finally(() => setConfirmDialog(null));
+      }
+    });
+  };
+
   const filteredReservations = reservations.filter(res => {
     if (filterStatus === 'All') return true;
     return res.status === filterStatus || res.paymentStatus === filterStatus;
@@ -90,6 +110,8 @@ export default function CustomerReservations() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredReservations.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredReservations.length / itemsPerPage);
+
+  
 
   return (
     <div className="hb-cust-res" style={{ maxWidth: '900px', margin: '0 auto', fontFamily: "'Inter', sans-serif" }}>
@@ -187,6 +209,15 @@ export default function CustomerReservations() {
                     </span>
                   </div>
 
+                  {res.status !== 'Cancelled' && (
+                    <button
+                      onClick={() => handleCancelReservation(res.id)}
+                      style={{ marginTop: '10px', padding: '8px 14px', backgroundColor: COLORS.roseSoft, color: COLORS.rose, border: `1px solid ${COLORS.roseBorder}`, borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px', transition: 'all 0.15s' }}
+                    >
+                      <FaTimes size={12} /> Cancel Booking
+                    </button>
+                  )}
+
                   <div style={{ width: '100%' }}>
                     <div style={{ fontSize: '12px', color: COLORS.muted, marginBottom: '5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.4px' }}>Payment Status</div>
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 14px', borderRadius: '20px', fontSize: '13px', fontWeight: 700, backgroundColor: paymentBadge.bg, color: paymentBadge.color }}>
@@ -224,6 +255,24 @@ export default function CustomerReservations() {
               </button>
             </div>
           )}
+        </div>
+      )}
+
+      {confirmDialog && (
+        <div className="hb-modal-overlay" onClick={() => setConfirmDialog(null)} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(13,43,38,0.45)', backdropFilter: 'blur(4px)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1100, padding: '20px' }}>
+          <div className="hb-modal-card" onClick={(e) => e.stopPropagation()} style={{ backgroundColor: 'white', borderRadius: '16px', width: '400px', maxWidth: '100%', boxShadow: '0 10px 30px rgba(13,43,38,0.25)', overflow: 'hidden' }}>
+            <div style={{ padding: '28px 25px 22px 25px', textAlign: 'center' }}>
+              <div style={{ width: '52px', height: '52px', borderRadius: '50%', margin: '0 auto 16px auto', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', backgroundColor: COLORS.roseSoft, color: COLORS.rose }}>
+                <FaExclamationTriangle />
+              </div>
+              <h3 style={{ margin: '0 0 10px 0', color: COLORS.ink, fontSize: '18px', fontFamily: "'Fraunces', serif", fontWeight: 600 }}>{confirmDialog.title}</h3>
+              <p style={{ margin: 0, color: COLORS.muted, fontSize: '14.5px', lineHeight: 1.5 }}>{confirmDialog.message}</p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px', padding: '0 25px 25px 25px' }}>
+              <button onClick={() => setConfirmDialog(null)} style={{ flex: 1, padding: '12px', backgroundColor: 'white', color: COLORS.text, border: `1px solid ${COLORS.border}`, borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '14.5px' }}>Never mind</button>
+              <button onClick={confirmDialog.onConfirm} style={{ flex: 1, padding: '12px', backgroundColor: COLORS.rose, color: COLORS.ivory, border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 700, fontSize: '14.5px' }}>Cancel Reservation</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
