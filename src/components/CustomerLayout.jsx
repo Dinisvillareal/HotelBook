@@ -9,6 +9,7 @@ import {
   FaHotel,
   FaBars,
   FaTimes,
+  FaHeart
 } from 'react-icons/fa';
 
 // ---- Design tokens (matches Login.jsx / Register.jsx / AdminLayout.jsx) ----
@@ -210,6 +211,9 @@ export default function CustomerLayout() {
           </Link>
           <Link to="/customer/profile" onClick={() => setMenuOpen(false)} className={navLinkClass('/customer/profile')} style={getLinkStyle('/customer/profile')} aria-current={location.pathname === '/customer/profile' ? 'page' : undefined}>
             <FaUserCircle size={18} /> My Profile
+          </Link>
+          <Link to="/customer/favorites" onClick={() => setMenuOpen(false)} className={navLinkClass('/customer/favorites')} style={getLinkStyle('/customer/favorites')}>
+            <FaHeart size={18} /> My Favorites
           </Link>
         </div>
 

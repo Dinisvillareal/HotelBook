@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaCalendarAlt, FaBed, FaArrowRight, FaConciergeBell, FaUsers } from 'react-icons/fa';
+import { FaCalendarAlt, FaBed, FaArrowRight, FaConciergeBell, FaUsers, FaHeart, FaRegHeart } from 'react-icons/fa';
 
 // ---- Design tokens (matches Login/Register/AdminLayout/Overview/ManageReservations) ----
 const COLORS = {
@@ -50,6 +50,7 @@ export default function CustomerOverview() {
   const [totalBookings, setTotalBookings] = useState(0);
   const [roomTypes, setRoomTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [favorites, setFavorites] = useState([]);
 
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -59,13 +60,15 @@ export default function CustomerOverview() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [userRes, bookingsRes, roomsRes] = await Promise.all([
+        const [userRes, bookingsRes, roomsRes, favsRes] = await Promise.all([
           axios.get(`${apiUrl}/api/Auth/me`, authConfig).catch(() => ({ data: { fullName: 'Guest' } })),
           axios.get(`${apiUrl}/api/Reservations/my-reservations`, authConfig).catch(() => ({ data: [] })),
           axios.get(`${apiUrl}/api/RoomTypes`).catch(() => ({ data: [] })),
+          axios.get(`${apiUrl}/api/Favorites`, authConfig).catch(() => ({ data: [] })),
         ]);
 
         setUserData(userRes.data);
+        setFavorites(favsRes.data);
 
         const myBookings = bookingsRes.data.$values || bookingsRes.data || [];
         const types = roomsRes.data.$values || roomsRes.data || [];
@@ -92,8 +95,20 @@ export default function CustomerOverview() {
     };
 
     fetchDashboardData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  
+const toggleFavorite = async (roomId) => {
+    try {
+      await axios.post(`${apiUrl}/api/Favorites/${roomId}/toggle`, {}, authConfig);
+      // Instantly update the UI so the heart fills in or empties
+      setFavorites(prev => 
+        prev.includes(roomId) ? prev.filter(id => id !== roomId) : [...prev, roomId]
+      );
+    } catch (error) {
+      console.error('Failed to toggle favorite:', error);
+    }
+  };
   if (isLoading) {
     return (
       <div className="hb-cust-overview" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh', color: COLORS.muted, fontFamily: "'Inter', sans-serif" }}>
@@ -190,10 +205,19 @@ export default function CustomerOverview() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '22px', marginBottom: '10px' }}>
           {roomTypes.map(room => (
-            <div key={room.id} className="hb-room-card" style={{ backgroundColor: 'white', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 4px 15px rgba(13,43,38,0.05)', border: `1px solid ${COLORS.border}` }}>
+            <div key={room.id} className="hb-room-card" style={{ position: 'relative', backgroundColor: 'white', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 4px 15px rgba(13,43,38,0.05)', border: `1px solid ${COLORS.border}` }}>
+              <button
+                onClick={() => toggleFavorite(room.id)}
+                style={{ position: 'absolute', top: '12px', right: '12px', background: 'white', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', zIndex: 10, transition: 'transform 0.15s' }}
+                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                {favorites.includes(room.id) ? <FaHeart color={COLORS.rose} size={18} /> : <FaRegHeart color={COLORS.muted} size={18} />}
+              </button>
               <div style={{ height: '110px', background: `linear-gradient(135deg, ${COLORS.emeraldSoft}, ${COLORS.brassSoft})`, display: 'flex', justifyContent: 'center', alignItems: 'center', color: COLORS.emerald }}>
                 <FaBed size={36} />
               </div>
+              
               <div style={{ padding: '20px' }}>
                 <h4 style={{ margin: '0 0 10px 0', color: COLORS.ink, fontSize: '17px', fontFamily: "'Fraunces', serif", fontWeight: 700 }}>{room.name}</h4>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: COLORS.text, fontSize: '14px', marginBottom: '16px' }}>

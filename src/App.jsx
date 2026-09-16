@@ -16,6 +16,8 @@ import RegisterStaff from './pages/RegisterStaff';
 // Customer Pages
 import CustomerOverview from './pages/CustomerOverview';
 import CustomerReservations from './pages/CustomerReservations';
+import CustomerFavorites from './pages/CustomerFavorites';
+
 import UserProfile from './pages/UserProfile';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -80,6 +82,7 @@ export default function App() {
           <Route index element={<CustomerOverview />} />
           <Route path="book" element={<CreateReservation />} /> 
           <Route path="reservations" element={<CustomerReservations />} />
+          <Route path="favorites" element={<CustomerFavorites />} />
           <Route path="profile" element={<UserProfile />} />
         </Route>
 
