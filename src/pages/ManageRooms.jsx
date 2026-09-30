@@ -88,7 +88,17 @@ export default function ManageRooms() {
       .catch(err => console.error("Error fetching physical rooms:", err));
   }, []);
 
-  const handleRoomChange = (e) => setNewRoomData({ ...newRoomData, [e.target.name]: e.target.value });
+ const handleRoomChange = (e) => {
+    const { name, value } = e.target;
+    
+    if (name === 'roomNumber') {
+      // Instantly strip out any character that is not a digit (0-9)
+      const numericValue = value.replace(/[^0-9]/g, '');
+      setNewRoomData({ ...newRoomData, [name]: numericValue });
+    } else {
+      setNewRoomData({ ...newRoomData, [name]: value });
+    }
+  };
   const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleCreatePhysicalRoom = async (e) => {
