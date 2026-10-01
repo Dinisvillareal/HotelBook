@@ -330,13 +330,16 @@ export default function ManageReservations() {
                       <td style={{ ...tdStyle, fontWeight: 700, color: COLORS.emerald }}>#{res.id}</td>
                       
                       {/* FIX: Handle missing Guest Names elegantly in the table */}
-                      <td style={{ ...tdStyle, fontWeight: 600, color: COLORS.ink }}>
-                        {res.guestName ? (
-                          res.guestName
-                        ) : (
-                          <span style={{ color: COLORS.muted, fontStyle: 'italic', fontWeight: 500 }}>Registered Guest</span>
-                        )}
-                      </td>
+                      <td 
+  title={res.guestName}
+  style={{ ...tdStyle, fontWeight: 600, color: COLORS.ink, maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+>
+  {res.guestName ? (
+    res.guestName
+  ) : (
+    <span style={{ color: COLORS.muted, fontStyle: 'italic', fontWeight: 500 }}>Registered Guest</span>
+  )}
+</td>
 
                       <td style={tdStyle}>{formatBeautifulDate(res.checkInDate)}</td>
                       <td style={tdStyle}>{formatBeautifulDate(res.checkOutDate)}</td>

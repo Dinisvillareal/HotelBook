@@ -260,7 +260,12 @@ export default function Overview() {
                   {stats.todaysArrivals.map(res => (
                     <tr key={res.id} className="hb-row" style={{ borderBottom: `1px solid ${COLORS.border}`, transition: 'background-color 0.15s' }}>
                       <td style={{ padding: '15px' }}>
-                        <div style={{ fontWeight: '600', color: COLORS.ink }}>{res.guestName}</div>
+                        <div 
+  title={res.guestName} 
+  style={{ fontWeight: '600', color: COLORS.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '180px' }}
+>
+  {res.guestName}
+</div>
                         <div style={{ fontSize: '12px', color: COLORS.muted }}>ID: #{res.id}</div>
                       </td>
                       <td style={{ padding: '15px' }}>
