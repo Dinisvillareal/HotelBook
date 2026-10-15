@@ -209,7 +209,7 @@ export default function ManageReservations() {
     });
   };
 
-  const filteredReservations = reservations.filter(res => {
+ const filteredReservations = reservations.filter(res => {
     const matchesBooking = bookingFilter === 'All' || res.status === bookingFilter;
     const matchesPayment = paymentFilter === 'All' || (res.paymentStatus || 'Pending') === paymentFilter;
 
@@ -217,11 +217,17 @@ export default function ManageReservations() {
     const displayGuestName = res.guestName || 'Registered Guest';
     const safeGuestName = displayGuestName.toLowerCase();
     const safeId = res.id ? res.id.toString() : '';
+    
+    // 1. ADD THIS: Safely grab the room number (or fallback to roomId) as a string
+    const safeRoomNumber = (res.roomNumber || res.roomId || '').toString().toLowerCase();
+    
     const searchLower = searchQuery.toLowerCase();
 
+    // 2. UPDATE THIS: Add the safeRoomNumber check to the search match
     const matchesSearch = searchQuery === '' ||
       safeGuestName.includes(searchLower) ||
-      safeId.includes(searchLower);
+      safeId.includes(searchLower) ||
+      safeRoomNumber.includes(searchLower);
 
     return matchesBooking && matchesPayment && matchesSearch;
   }).sort((a, b) => b.id - a.id);
