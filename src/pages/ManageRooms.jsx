@@ -110,7 +110,12 @@ export default function ManageRooms() {
       setNewRoomData({ roomNumber: '', roomTypeId: '' });
     } catch (error) {
       console.error("Error creating room:", error);
-      alert("Failed to create room. Check the console.");
+      
+      // Look for the specific message from the backend, fallback to the generic one if it fails
+      const errorMessage = error.response?.data?.message || "Failed to create room. Check the console.";
+      
+      // Alert the actual message!
+      alert(errorMessage);
     }
   };
 
