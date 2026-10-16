@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import axios from 'axios';
 
 // --- YOUR COMPONENTS ---
 import LandingPage from './pages/LandingPage'; // <-- 1. ADD THIS IMPORT
@@ -19,6 +20,19 @@ import CustomerReservations from './pages/CustomerReservations';
 import CustomerFavorites from './pages/CustomerFavorites';
 
 import UserProfile from './pages/UserProfile';
+
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // The token is dead! Clear the storage and force them to the login page.
+      sessionStorage.removeItem('jwtToken');
+      sessionStorage.removeItem('userRole');
+      window.location.href = '/login'; 
+    }
+    return Promise.reject(error);
+  }
+);
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const token = sessionStorage.getItem('jwtToken');
