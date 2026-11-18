@@ -142,7 +142,11 @@ export default function ManageReservations() {
   };
 
   useEffect(() => {
-    fetchReservations();
+    const loadData = async () => {
+      await fetchReservations();
+    };
+    loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const openVoucherDialog = (id) => {
@@ -239,6 +243,7 @@ export default function ManageReservations() {
 
   const hasActiveFilters = bookingFilter !== 'All' || paymentFilter !== 'All' || searchQuery !== '';
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
   if (isLoading) {
     return (
       <div className="hb-mres" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh', color: COLORS.muted, fontFamily: "'Inter', sans-serif" }}>
@@ -269,9 +274,8 @@ export default function ManageReservations() {
         <div className="hb-search-wrap" style={{ flex: '1 1 300px', display: 'flex', alignItems: 'center', backgroundColor: COLORS.pageBg, borderRadius: '8px', border: `1px solid ${COLORS.border}`, padding: '0 15px', transition: 'border-color 0.15s, box-shadow 0.15s' }}>
           <FaSearch color={COLORS.muted} size={14} />
           <input
-            type="text" placeholder="Search guest name or ID…" value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-            style={{ border: 'none', background: 'transparent', padding: '12px', width: '100%', outline: 'none', fontSize: '15px', color: COLORS.text }}
+            type="text" placeholder="Search guest name, room, or ID…" value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+          style={{ border: 'none', background: 'transparent', padding: '12px', width: '100%', outline: 'none', fontSize: '15px', color: COLORS.text }}
           />
         </div>
 
@@ -316,7 +320,7 @@ export default function ManageReservations() {
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ backgroundColor: COLORS.pageBg, color: COLORS.text, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                  <th style={thStyle}>ID</th>
+                  <th style={thStyle}>Room</th>
                   <th style={thStyle}>Guest Name</th>
                   <th style={thStyle}>Check-In</th>
                   <th style={thStyle}>Check-Out</th>
@@ -333,7 +337,7 @@ export default function ManageReservations() {
 
                   return (
                     <tr key={res.id} className="hb-row" style={{ borderBottom: `1px solid ${COLORS.border}`, transition: 'background-color 0.15s' }}>
-                      <td style={{ ...tdStyle, fontWeight: 700, color: COLORS.emerald }}>#{res.id}</td>
+                      <td style={{ ...tdStyle, fontWeight: 700, color: COLORS.emerald }}> Room {res.roomNumber || res.roomId}</td>
                       
                       {/* FIX: Handle missing Guest Names elegantly in the table */}
                       <td 
