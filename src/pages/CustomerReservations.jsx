@@ -177,7 +177,18 @@ export default function CustomerReservations() {
 
             return (
               <div key={res.id} className="hb-res-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', backgroundColor: 'white', padding: '25px', borderRadius: '16px', boxShadow: '0 4px 15px rgba(13,43,38,0.04)', border: `1px solid ${COLORS.border}` }}>
-
+<div
+  style={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    textAlign: 'right',
+    gap: '12px',
+    maxWidth: '250px',
+    marginLeft: 'auto',
+  }}
+>
+</div>
                 {/* Left Side: Booking Details */}
                 <div style={{ flex: '1 1 300px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
@@ -200,7 +211,7 @@ export default function CustomerReservations() {
                 </div>
 
                 {/* Right Side: Status Badges */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start', minWidth: '150px' }}>
+                <div style={{display: 'flex', flexDirection: 'column',alignItems: 'flex-end',textAlign: 'right',gap: '12px',maxWidth: '250px',marginLeft: 'auto', }}>
 
                   <div style={{ width: '100%' }}>
                     <div style={{ fontSize: '12px', color: COLORS.muted, marginBottom: '5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.4px' }}>Booking Status</div>
@@ -210,12 +221,35 @@ export default function CustomerReservations() {
                   </div>
 
                   {res.status !== 'Cancelled' && (
+  res.paymentStatus === 'Paid' ? (
+    <div style={{ marginTop: '10px' }}>
+      <button
+        disabled
+        style={{
+          padding: '8px 14px',
+          borderRadius: '8px',
+          border: '1px solid #d1d5db',
+          backgroundColor: '#f3f4f6',
+          color: '#9ca3af',
+          cursor: 'not-allowed',
+          fontWeight: 600,
+          fontSize: '13px'
+        }}
+      >
+        Cancel Booking
+      </button>
+      <p style={{ margin: '6px 0 0 0', fontSize: '12px', color: '#8a8f89', fontStyle: 'italic', textAlign: 'right' }}>
+        Paid reservations can’t be cancelled. Please contact the hotel for assistance.
+      </p>
+    </div>
+  ) : (
                     <button
                       onClick={() => handleCancelReservation(res.id)}
                       style={{ marginTop: '10px', padding: '8px 14px', backgroundColor: COLORS.roseSoft, color: COLORS.rose, border: `1px solid ${COLORS.roseBorder}`, borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px', transition: 'all 0.15s' }}
                     >
                       <FaTimes size={12} /> Cancel Booking
                     </button>
+  )
                   )}
 
                   <div style={{ width: '100%' }}>
